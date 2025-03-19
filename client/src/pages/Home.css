@@ -1,0 +1,49 @@
+/* Reset & Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Main Layout Container */
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the full height of the viewport */
+  }
+  
+  /* Navbar (Assuming it should stay at the top) */
+  .nav-main {
+    height: 60px; /* Adjust as needed */
+    background-color: #0070f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+  }
+  
+  /* Main Content */
+  .home-content {
+    flex: 1; /* Ensures it takes remaining space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: red;
+  }
+  
+  /* Footer */
+  .footer-main {
+    height: 50px;
+    background-color: green;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
