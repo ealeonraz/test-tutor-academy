@@ -1,43 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import Navbar from '../components/Navbar'; 
 import Footer from '../components/Footer'; 
 import "./Home.css";
 import { getStudents } from '../services/api'; 
-
 /**
  * Home Component
  * This component serves as the homepage layout.
  * It includes:
  * - A navigation bar (Navbar)
  * - A main content section
- * - A button to fetch and display students in a popup
  * - A footer (Footer)
  */
 function Home() {
-  const [students, setStudents] = useState([]); // Store student data
-  const [showPopup, setShowPopup] = useState(false); // Manage popup visibility
+  const[student, setStudents] = useState([]);
+  const[showPopup, setShowPopup] = useState(false);
 
-  /**
-   * Fetch student data from the backend and display it in a popup.
-   * - Calls `getStudents()`, logs the first student's first name, and updates state.
-   * - Ensures the popup opens after data is retrieved.
-   */
   const handleFetchStudents = async () => {
     const data = await getStudents();
-
-    if (data.length > 0) {
-      console.log(data[0].firstName); // Log first student's name (for debugging)
-    }
-
+    console.log(data[0].firstName)
     setStudents(data);
     setShowPopup(true);
-  };
-
-  /** Close the popup when called */
-  const closePopup = () => {
+  }
+  const closePopup=()=>{
     setShowPopup(false);
-  };
-
+  }
+  
   return (
     <div className="home-container">
       {/* Navigation Bar */}
@@ -47,30 +34,20 @@ function Home() {
       <main className="home-content">
         <div className="home-section-main">
           MAIN {/* Placeholder for main content */}
-
-          {/* Button to fetch students and show the popup */}
-          <button onClick={handleFetchStudents}>Get Students</button>
+          <button onClick={handleFetchStudents}>
+          
+          </button>
         </div>
       </main>
 
-      {/* Popup Display (Only appears if showPopup is true) */}
+      {/* Popup Display when showPopup state is true*/}
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
             <h2>Student List</h2>
-
-            {/* Handle cases where student data is empty */}
-            {students.length > 0 ? (
-              <ul>
-                {students.map((student, index) => (
-                  <li key={index}>{student.firstName}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>No students found.</p>
-            )}
-
-            {/* Close button to hide the popup */}
+            <ul>
+                <li>{student[0].firstName}</li>
+            </ul>
             <button onClick={closePopup}>Close</button>
           </div>
         </div>

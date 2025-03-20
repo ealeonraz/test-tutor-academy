@@ -12,7 +12,7 @@ const API_URL = "http://localhost:4000";
  */
 export const getStudents = async () => {
     try {
-        const response = await fetch(`${API_URL}/About`); // Ensure this matches your backend route
+        const response = await fetch(`${API_URL}/`); // Ensure this matches your backend route
         if (!response.ok) {
             throw new Error("Failed to fetch students");
         }
