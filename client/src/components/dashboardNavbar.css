@@ -1,0 +1,165 @@
+
+:root {
+    --primary: #D0BCFF; /* Light purple */
+  }
+  
+  /* Reset & Global Styles */
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+  
+    .dashboard-nav-main {
+      height: 60px; /* Adjust as needed */
+      background-color: white;
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+  
+    .logo{
+      display: flex;
+      align-items: center;
+      position:absolute;
+      left: 20px;
+      height:100%;
+      width:125px;
+  
+      display: inline-flex;
+      cursor: pointer;
+    }
+  
+   
+  
+    .dashboard-button {
+      height: 100%;
+      width: 125px;
+      background-color: var(--primary); /* Vibrant yellow */
+      border: none;
+     
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      
+      font-weight: bold;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 8px var(--primary);
+    }
+  
+    .dashboard-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 20px rgba(58, 11, 231, 0.671);
+    }
+    
+    .dashboard-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(255, 193, 7, 0.3);
+    }
+    
+    .dashboard-button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(111, 0, 255, 0.6),
+        transparent
+      );
+      transition: left 0.5s;
+    }
+    
+    .dashboard-button:hover::before {
+      left: 100%;
+    }
+  
+    .dashboard-buttons-group {
+      display: flex;
+      flex-direction: row;
+      border-color:red;
+      height:100%;
+      justify-content: space-between; /* Center the buttons horizontally */
+      align-items: center; /* Center the buttons vertically */
+    }
+    
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+  
+  /* Main Layout Container */
+  .student-dashboard-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensures the full height of the viewport */
+    }
+  
+    /* Main Content */
+    .student-dashboard-content {
+      flex: 1; /* Ensures it takes remaining space */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-color: var(--primary);
+    }
+  
+    .account-overlay img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%; /* Makes the image circular */
+      justify-content: space-between;
+      margin-right: 10px; /* Space between image and text */
+      margin-left: 10px;
+    }
+  
+    .account-overlay {
+      height:100%;
+      background-color:gray;
+      border:10px;
+  
+      display: flex;
+      align-items: center;
+      position:absolute;
+      right: 20px;
+    }
+  
+    .account-arrow-button {
+      background-color: transparent;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+  
+      font-weight: bold;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+  
+    .account-arrow-button:hover{
+      transform: rotate3d(0, 1, 0, 180deg);
+      transition: transform 0.4s ease;
+    }
+  
+    .account-arrow-button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 60px;
+      height: 100%;
+      transition: left 0.5s;
+    }
+  
+    .account-button:active {
+      
+    }
