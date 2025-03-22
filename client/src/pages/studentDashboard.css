@@ -1,0 +1,16 @@
+/* Main Layout Container */
+.student-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the full height of the viewport */
+}
+
+/* Main Content */
+.student-dashboard-content {
+  flex: 1; /* Ensures it takes remaining space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: var(--primary);
+}
