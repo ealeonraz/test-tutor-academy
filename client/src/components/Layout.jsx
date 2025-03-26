@@ -1,14 +1,24 @@
-import { Outlet } from "react-router-dom";
-import StudentDashboardNavbar from "./dashboardNavbar";
+import React from 'react';
+import Navbar from './logged-in-main-navbar/logged-in-main-navbar';
+import Footer from './Footer';
 
 import "./dashboardNavbar.css"
 
-function Layout(){
-    return(
+const Layout = ({ children }) => {
+    return (
         <div className="layout-container">
-            <StudentDashboardNavbar />
-            <Outlet />
+            {/* Include the Navbar */}
+            <Navbar />
+            
+            {/* Main Content */}
+            <main className="layout-content">
+                {children}
+            </main>
+            
+            {/* Include the Footer */}
+            <Footer />
         </div>
     );
-}
+};
+
 export default Layout;
