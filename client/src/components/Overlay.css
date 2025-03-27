@@ -1,3 +1,20 @@
+.nav-button {
+    width: 120px;
+    height: 24px;
+    border-radius: 12px;
+    background-color:blueviolet;
+    color: white;
+    border-width: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+
+.nav-button:hover {
+    background-color:black;
+}
+
+
 .button-login{
     width: 120px;
     height: 40px;
