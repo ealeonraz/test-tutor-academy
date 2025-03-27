@@ -1,6 +1,7 @@
 import express from "express";
 import connectDB from "../database/db.js"; // Import the database connection function
 import { ObjectId } from "mongodb";
+import bcrypt from "bcrypt";
 
 const router = express.Router();
 
@@ -29,5 +30,53 @@ router.get("/", async (req, res) => {
         res.status(500).json({ error: "Failed to fetch students" });
     }
 });
+
+/**
+ * @route   POST /register
+ * @desc    Register a new account in the database
+ * @access  Public
+ */
+router.post("/register", async (req, res) => {
+  try {
+    const db = await connectDB();
+
+    const collection = db.collection("users");
+
+    const{first, last, email, password, confirmPassword} = req.body;
+
+    // Case 1 - account exists
+    const existingStudent = await collection.findOne({email});
+    if(existingStudent) {
+      res.status(400).json({
+        error: "Email already in use",
+      })
+    }
+    // Case 2 - new account
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    const newStudent = {
+      firstName: first,
+      lastName: last,
+      email: email,
+      password: hashedPassword,
+      role: "student",
+      tutor: null,
+    } 
+    const result = await collection.insertOne(newStudent);
+    res.status(201).json({
+      message: "Feedback submit",
+      id: result.insertedId,
+    });
+    // Case 3 - invalid email
+    // Case 4 - passwords don't match
+
+    
+  }
+  catch (error) {
+    console.error("Failed to create account");
+    res.status(500).json({ error: "Failed to create account"});
+  }
+});
+
+
 
 export default router;
