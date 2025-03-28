@@ -12,8 +12,8 @@ export default function SDH_yourTutors() {
     useEffect(() => {
         async function fetchTutors() {
             try {
-                const reponse = await fetch('/api/tutors');
-                const data = await Response.json();
+                const response = await fetch('/api/tutors');
+                const data = await response.json();
             } catch (error) {
                 console.error('Error fetching the tutors:', error);
             }
