@@ -324,6 +324,36 @@ html {
     /* Prevent the logo from taking too much space */
 }
 
+.tutors-card {
+    width: 12em;
+    height: 14em;
+    background-color: blue;
+}
+
+.tutors-card-group {
+    align-items: center;
+    gap: 1em;
+}
+
+.your-tutors-box {
+    position: relative;
+    display:flex;
+
+    /* Border */
+    width: 50em;
+    height: 40em;
+    border: 15px solid var(--secondary);
+    padding-left: 4em;
+    
+    margin: 0.5em;
+    border-radius: 5px;
+
+    /* Inside box */
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Responsiveness */
 @media (max-width: 768px) {
     .logged-in-main-navbar {

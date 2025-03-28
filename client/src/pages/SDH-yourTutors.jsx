@@ -7,28 +7,19 @@ import './Page.css';
 import profilePic from '../assets/gohan-pic.webp';
 
 export default function SDH_yourTutors() {
-    /* This sets the current date on the welcome/home page */
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const [currentTime, setCurrentTime] = useState('');
-    const [timeMessage, setTimeMessage] = useState('');
+    const [tutors, setTutors] = useState([])
+
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            const currentHour = new Date().getHours();
-            if (currentHour >= 5 && currentHour < 12) {
-                setCurrentTime("Good Morning, ");
-                setTimeMessage("Let's start the day off great in your studies!");
+        async function fetchTutors() {
+            try {
+                const reponse = await fetch('/api/tutors');
+                const data = await Response.json();
+            } catch (error) {
+                console.error('Error fetching the tutors:', error);
             }
-            else if (currentHour >= 12 && currentHour < 18) {
-                setCurrentTime("Good Afternoon, ");
-                setTimeMessage("A good study session happens right after Lunch");
-            }
-            else {
-                setCurrentTime("Good Evening, ");
-                setTimeMessage("The night is still young, keep studying!");
-            }
-            setCurrentDate(new Date());
-        }, 1000);
-        return () => clearInterval(intervalId);
+        }
+
+        fetchTutors();
     }, []);
 
     return (
@@ -36,6 +27,18 @@ export default function SDH_yourTutors() {
             <Navbar />
             <StudentDashboardNavbar />
             <div className="student-dashboard-content">
+                <div className="your-tutors-box">
+                    <div className="tutors-card-group">
+                        {tutors.length > 0 ? (tutors.map((tutor, index) => (
+                            <button key={index} className="tutors-card">
+                                {tutor.name} { /* Displays the tutor's name */}
+                            </button>
+                        ))
+                        ) : (
+                            <p> No tutors booked yet</p> // Message if no tutors are found
+                        )}
+                    </div>
+                </div>
             </div>
             <Footer />
         </div>
