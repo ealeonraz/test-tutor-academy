@@ -1,6 +1,26 @@
 import { useNavigate } from "react-router-dom";
+import * as jwtDecodeModule from "jwt-decode";
 
 export default function StudentDashboardNavbar() {
+  const useAuth = () => {
+    const token = localStorage.getItem('token');
+    let user = null;
+
+    if (token) {
+      try {
+        user = jwtDecodeModule.default(token);
+
+      } catch (error) {
+        localStorage.removeItem('token');
+        user = null;
+      }
+    }
+    return {
+      isLoggedIn: !user,
+      user,
+    };
+  };
+  const { isLoggedIn, user } = useAuth();
   const navigate = useNavigate();
 
   const sendToHome = () => {
@@ -12,7 +32,9 @@ export default function StudentDashboardNavbar() {
     console.log("navigating to Your Tutors page");
     navigate("/studentDashboard/yourTutors");
   }
-
+  if (!isLoggedIn) {
+    return <div>Error! You are not suppose to see this page.</div>
+  }
   return (
     <div className="dashboard-nav-main">
       <div className="dashboard-buttons-group">
