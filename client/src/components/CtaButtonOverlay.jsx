@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import React, { useRef } from "react";
-import "./Overlay.css"
 
 
 
-const RegisterOverlay = () => {
+
+const CtaButtonOverlay = () => {
 
     const dialogRef = useRef(null);
 
@@ -98,12 +98,12 @@ const RegisterOverlay = () => {
 
   return (
         <>
-            {/* Login Button */}
+            {/* Cta Button */}
             <div className="nav-buttons">
                 <button 
                 onClick={openDialog}
-                className="register-button">
-                    Register
+                className="cta-button">
+                    Search For Tutors Now!
                 </button>
             </div>
         
@@ -182,5 +182,5 @@ const RegisterOverlay = () => {
 // escape key
 //LoginOverlay.addEventListener()
 
-export default RegisterOverlay;
+export default CtaButtonOverlay;
 

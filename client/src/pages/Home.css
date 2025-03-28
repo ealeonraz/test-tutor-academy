@@ -1,0 +1,351 @@
+
+  /* Main Layout Container */
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the full height of the viewport */
+    overflow: auto;
+  }
+  
+  /* Navbar (Assuming it should stay at the top) */
+  .nav-main nav {
+    height: 80px; 
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    min-height: 80px;
+    width: 100%;
+  }
+  .nav-buttons-container {
+    display: flex;
+    gap: 30px; /* Adds spacing between buttons */
+    align-items: center;
+  }
+  
+  .website-logo img{
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  
+
+.nav-buttons:nth-child(1) { order: 1; } /* Register Button */
+.nav-buttons:nth-child(2) { order: 2; } /* Login Button */
+.nav-buttons:nth-child(3) { order: 3; } /* What We Offer Button */
+
+
+  
+  
+  /* Main Content */
+  .home-content {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 20px;
+    min-height: 400px;
+    height: 100vh;
+    background-color: white;
+    
+    
+  }
+
+  .home-text{
+    flex: 1;
+    text-align: left;
+    padding: 20px;
+    max-width: 500px;
+    margin-top: -6%; 
+  }
+
+  .cta-heading{
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px !important;
+  }
+
+  .cta-description{
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    margin-top: 45px !important;
+    margin-bottom: 30px !important;
+  }
+
+
+
+  .cta-button{
+    background-color: blueviolet;
+    color: white;
+    border: 3px solid black;
+    padding: 20px;
+    font-size: 18px;
+    font-family: 'Arial', sans-serif;
+    cursor: pointer;
+    text-align: center;
+    width: 250px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: -6px 6px 10px rgba(0, 0, 0, 0.7); 
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .cta-button:hover {
+    background-color: black; 
+}
+
+  .home-image img{
+    width: 420x;
+    height: 420px;
+    display: block;
+    object-fit: cover;
+  }
+
+
+
+  .home-section-main{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  /* Footer styles */
+.footer {
+  background-color: white;
+  color: black;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+.footer-logo img {
+ height: 100%;
+ width: auto;
+}
+
+.footer-contact {
+  font-size: 14px;
+}
+
+.footer-phone, .footer-email {
+  margin: 5px 0;
+}
+
+.footer-copyright {
+  font-size: 12px;
+  margin-top: 10px;
+}
+  /* what we offer Button Style */
+  .what-we-offer-button{
+    width: 170px;
+    height: 50px; 
+    border-radius: 25px; 
+    background-color: blueviolet;
+    color: white; 
+    border: none; 
+    font-size: 18px; 
+    line-height: 50px;
+    text-align: center; 
+    font-weight: semi-bold; 
+    margin-top: 5px; 
+    margin-bottom: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease;
+    border: 2px solid black; 
+
+  }
+  
+  .what-we-offer-button:hover{
+    background-color: black;
+  }
+
+  /*What we offer section Style */
+  .what-we-offer{
+    padding: 50px;
+    background-color: #ffffff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    font-size: 24px;
+  }
+  
+
+  .what-we-offer h2{
+    font-size: 36px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #333;
+    margin-top: 0px;
+    margin-bottom: 80px;
+    }
+
+/* Testimonials Section */
+  .testimonials-container {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: white; 
+    color: black; 
+  }
+
+/* Section Title */
+.testimonials-container h2 {
+  font-size: 36px;
+  font-weight: bold;
+  color: black; 
+  margin-top: 40px;
+  margin-bottom: 80px;
+  
+}
+
+/* Testimonial List */
+.testimonials-list {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 20px; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 20px;
+}
+
+/* Individual Testimonial Card */
+.testimonial-item {
+  background: blueviolet;
+  padding: 20px;
+  border-radius: 12px;
+  border: 3px solid black;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 300px; 
+  transition: transform 0.3s ease-in-out;
+  color: white;
+  margin-bottom: 40px;
+  margin-right: 40px; 
+}
+
+.testimonial-item:hover {
+  transform: scale(1.05);
+}
+
+/* Avatar Styling */
+.testimonial-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 3px solid white; 
+}
+
+/* Name and Role */
+.testimonial-item h3 {
+  font-size: 20px;
+  color: white; 
+  margin: 10px 0 5px;
+}
+
+.testimonial-item p {
+  font-size: 16px;
+  color: white; 
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.overlay-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  
+}
+dialog {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+  width: 320px;
+  border-radius: 8px;
+  border-width: 0px;
+  margin:auto;
+}
+
+h1 {
+  margin:auto;
+  margin-bottom: 1em;
+}
+
+.login-flex {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  border-color: white;
+  padding: 20px 25px;
+  line-height: 1.4em;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-flex * {
+  box-sizing: border-box;
+}
+
+input {
+  width: 100%;
+  height: 40px;
+  padding: 16px;
+  padding-top: 16px;
+  border-radius: 8px;
+  border-width: 2px;
+  border-color: #D9D9D9;
+  border-style: solid;
+  font-size: 16px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+
+
+.wide-black {
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  height: 40px;
+  width: 100%;
+  border-width: 0px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.wide-black:hover {
+  background-color: rgb(181, 129, 230);
+  color: black;
+}
+
+.login-link{
+  margin-top: 8px;
+  margin-bottom: 20px;
+  text-decoration: underline;
+}
+.login-link:hover {
+  color: blueviolet;
+}
+
+.error-message {
+  color: rgb(255, 82, 82);
+}
+#Schedule{
+color: blueviolet;
+}

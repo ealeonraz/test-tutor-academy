@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import LoginOverlayButton from "../components/LoginOverlayButton";
-import RegisterOverlayButton from "../components/RegisterOverlayButton";
-import "./Page.css";
-import { useNavigate } from 'react-router-dom';
-
-
+import React, { useEffect, useState} from 'react';
+import Navbar from '../components/Navbar'; 
+import Footer from '../components/Footer'; 
+import "./Home.css";
+import { getStudents } from '../services/api'; 
 /**
  * Home Component
  * This component serves as the homepage layout.
@@ -32,35 +28,19 @@ function parseJwt(token) {
 }
 
 function Home() {
-  const [showPopup, setShowPopup] = useState(false);
-  const navigate = useNavigate();
+  const[student, setStudents] = useState([]);
+  const[showPopup, setShowPopup] = useState(false);
 
-  const closePopup = () => {
+  const handleFetchStudents = async () => {
+    const data = await getStudents();
+    console.log(data[0].firstName)
+    setStudents(data);
+    setShowPopup(true);
+  }
+  const closePopup=()=>{
     setShowPopup(false);
-  };
-
-  // Check if the user is logged in and redirect accordingly
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    console.log("I am here");
-    if (token) {
-      try {
-        const decoded = parseJwt(token);
-        if (decoded.role === "student") {
-          console.log(decoded.role)
-          navigate("/");
-        } else {
-          console.error("Unknown User role:", decoded.role);
-          navigate("/studentDashboard/");
-        }
-      } catch (error) {
-        console.error("Error: Failed to get user info", error);
-        localStorage.removeItem('token');
-        navigate("/");
-      }
-    }
-  }, [navigate]);
-
+  }
+  
   return (
     <div className="home-container">
       {/* Navigation Bar */}
@@ -68,14 +48,16 @@ function Home() {
       <LoginOverlayButton />
       <RegisterOverlayButton />
 
-      {/* Main Content Section */}
       <main className="home-content">
         <div className="home-section-main">
           MAIN {/* Placeholder for main content */}
+          <button onClick={handleFetchStudents}>
+          
+          </button>
         </div>
       </main>
 
-      {/* Popup Display when showPopup state is true */}
+      {/* Popup Display when showPopup state is true*/}
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
@@ -85,7 +67,7 @@ function Home() {
           </div>
         </div>
       )}
-
+      
       {/* Footer */}
       <Footer />
     </div>

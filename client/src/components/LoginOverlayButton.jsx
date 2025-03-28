@@ -61,7 +61,7 @@ const LoginOverlay = () => {
     <>
       {/* Login Button */}
       <div className="nav-buttons">
-        <button onClick={openDialog} className="nav-button">
+        <button onClick={openDialog} className="login-button">
           Log in
         </button>
       </div>
