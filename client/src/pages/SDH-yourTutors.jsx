@@ -6,7 +6,7 @@ import Navbar from '../components/logged-in-main-navbar';
 import './Page.css';
 import profilePic from '../assets/gohan-pic.webp';
 
-function StudentDashboardHome() {
+export default function SDH_yourTutors() {
     /* This sets the current date on the welcome/home page */
     const [currentDate, setCurrentDate] = useState(new Date());
     const [currentTime, setCurrentTime] = useState('');
@@ -36,42 +36,8 @@ function StudentDashboardHome() {
             <Navbar />
             <StudentDashboardNavbar />
             <div className="student-dashboard-content">
-                <div className="student-welcome-box">
-                    <div className="date">
-                        <p>{currentDate.toLocaleDateString()}</p>
-                    </div>
-                    <div className="name-message">
-                        <h1>{currentTime}Student</h1>
-                        <h4>{timeMessage}</h4>
-                    </div>
-                    <div className="user-picture">
-                        <img src={profilePic}></img>
-                    </div>
-                </div>
-
-                {/* Typewriter Effect */}
-                <div className="typewriter-container">
-                    <p className="typwriter-text">What are we searching for this time?</p>
-                </div>
-
-                {/* Search Bar */}
-                <div className="search-bar-container">
-                    <input
-                        type="text"
-                        className="search-bar"
-                        placeholder="Search for tutors, subjects, or topics..."
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                console.log("Search submitted:", e.target.value);
-                                // Add your search logic here
-                            }
-                        }}
-                    />
-                </div>
             </div>
             <Footer />
         </div>
     );
 }
-
-export default StudentDashboardHome;

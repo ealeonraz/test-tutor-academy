@@ -1,8 +1,8 @@
 import React from 'react';
-import Navbar from './logged-in-main-navbar/logged-in-main-navbar';
+import Navbar from './logged-in-main-navbar';
 import Footer from './Footer';
 
-import "./dashboardNavbar.css"
+import "./Component.css"
 
 const Layout = ({ children }) => {
     return (

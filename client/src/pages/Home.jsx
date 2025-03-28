@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import Navbar from '../components/Navbar'; 
 import Footer from '../components/Footer'; 
-import "./Home.css";
+import "./Page.css";
 import { getStudents } from '../services/api'; 
 /**
  * Home Component
