@@ -102,19 +102,3 @@ function Home() {
 
 export default Home;
 
-
-
-{/* Popup Display when showPopup state is true*/}
-      {/*
-      {showPopup && (
-        <div className="popup">
-          <div className="popup-content">
-            <h2>Student List</h2>
-            <ul>
-                <li>{student[0].firstName}</li>
-            </ul>
-            <button onClick={closePopup}>Close</button>
-          </div>
-        </div>
-      )}
-   */ }
