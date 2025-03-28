@@ -149,4 +149,26 @@ router.get("/reviews", async (req, res) => {
 
 
 
+router.get('/api/users/:email', async (req, res) => {
+  try {
+    // Connect to the database
+    const db = await connectDB();
+    const collection = db.collection("users");
+
+    // Find user by email
+    const user = await collection.findOne({ email: req.params.email });
+
+    if (user) {
+      res.json(user);  // Send the user data, including avatar URL
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+
 export default router;
