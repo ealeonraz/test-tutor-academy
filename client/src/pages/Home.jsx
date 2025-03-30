@@ -10,6 +10,7 @@ import SmartSceduling from '../assets/SmartSceduling.webp';
 import PTracking from '../assets/PTracking.webp';
 import Pay from '../assets/Pay.webp';
 import Book from '../assets/Book.webp';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -40,16 +41,34 @@ function parseJwt(token) {
 }
 
 function Home() {
-  
-  
-  const[showPopup, setShowPopup] = useState(false);
-  const ctaToggle = () => {
-    setShowPopup(true)
-  }
+  const [showPopup, setShowPopup] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);  // Track login status
+  const navigate = useNavigate();
 
-  const closePopup=()=>{
+  const closePopup = () => {
     setShowPopup(false);
-  }
+  };
+  // Check if the user is logged in and redirect accordingly
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token && !isLoggedIn) {
+      try {
+        const decoded = parseJwt(token);
+        if (decoded.role === "student") {
+          navigate("/studentDashboard");
+        } else {
+          console.error("Unknown User role:", decoded.role);
+          navigate("/studentDashboard/");
+        }
+      } catch (error) {
+        console.error("Error: Failed to get user info", error);
+        localStorage.removeItem('token');
+        navigate("/");
+      }
+    }
+  }, [navigate, isLoggedIn]); // Include isLoggedIn in the dependency array
+
+  // Function to handle login success
 
  
     
