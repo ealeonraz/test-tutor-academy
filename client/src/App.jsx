@@ -6,6 +6,7 @@ import SDH_yourTutors from './pages/SDH-yourTutors';
 import "./App.css";
 import Layout from './components/Layout';
 import Feedback from './pages/Feedback';
+import SearchResults from './pages/SearchResults';
 function App() {
   return (
 
@@ -14,6 +15,7 @@ function App() {
       <Route path="/studentDashboard" element={<StudentDashboardHome />} />
       <Route path="/studentDashboard/yourTutors" element={<SDH_yourTutors />} />
       <Route path="/feedback" element={<Feedback />} />
+      <Route path="/search" element={<SearchResults />} />
     </Routes>
   );
 }
