@@ -38,25 +38,6 @@ function Home() {
     setShowPopup(false);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token && !isLoggedIn) {
-      try {
-        const decoded = parseJwt(token);
-        if (decoded.role === "student") {
-          navigate("/studentDashboard");
-        } else {
-          console.error("Unknown User role:", decoded.role);
-          navigate("/studentDashboard/");
-        }
-      } catch (error) {
-        console.error("Error: Failed to get user info", error);
-        localStorage.removeItem('token');
-        navigate("/");
-      }
-    }
-  }, [navigate, isLoggedIn]);
-
   return (
     <div className="home-container">
       <Navbar />
