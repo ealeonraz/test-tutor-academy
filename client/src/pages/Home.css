@@ -29,7 +29,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 60px 20px;  /* Taller hero section */
   background-color: #fff;
   flex: 1;
 }
@@ -95,7 +95,7 @@
 
 /* What We Offer Section */
 .what-we-offer {
-  padding: 80px 20px;
+  padding: 100px 20px;
   background-color: #fff;
   text-align: center;
 }
@@ -108,80 +108,14 @@
   margin-bottom: 60px;
 }
 
-
-
-/* TESTIMONIALS (REVIEW) SECTION */
-.testimonials-container {
-  background-color: #fff;
-  padding: 80px 20px;
-  text-align: center;
-  border-top: 1px solid #ddd;
-}
-
-.testimonials-container h2 {
-  font-size: 36px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 40px;
-}
-
-.testimonials-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-}
-
-.testimonial-item {
-  background-color: #f8f8f8;
-  border-radius: 12px;
-  padding: 30px;
-  max-width: 350px;
-  flex: 1 1 320px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.testimonial-item:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.testimonial-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 0 auto 20px;
-  border: 2px solid #ddd;
-}
-
-.testimonial-item h3 {
-  font-size: 20px;
-  color: #333;
-  margin: 10px 0;
-}
-
-.testimonial-item .testimonial-role {
-  font-size: 16px;
-  color: #777;
-  margin-bottom: 15px;
-  font-style: italic;
-}
-
-.testimonial-item p {
-  font-size: 16px;
-  color: #555;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* ================= ABOUT CARDS ================= */
+/* What We Offer Cards */
 .about-us-cards {
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
   justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .about-card {
@@ -215,10 +149,80 @@
   font-size: 0.95rem;
 }
 
-/* About Us Section */
+/* TESTIMONIALS (REVIEW) SECTION */
+/* Updated testimonial cards with purple background and white text */
+.testimonials-container {
+  background-color: #fff;
+  padding: 120px 20px; /* Increased padding */
+  text-align: center;
+  border-top: 1px solid #ddd;
+}
+
+.testimonials-container h2 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.testimonials-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.testimonial-item {
+  background-color: #8a2ce2; /* Purple initial color */
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 350px;
+  flex: 1 1 320px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  color: #fff;
+  text-align: left;
+}
+
+.testimonial-item:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: #7a25c2; /* Slightly different purple on hover */
+}
+
+.testimonial-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 20px;
+  border: 2px solid #ddd;
+}
+
+.testimonial-item h3 {
+  font-size: 20px;
+  color: #fff;
+  margin: 10px 0;
+}
+
+.testimonial-item .testimonial-role {
+  font-size: 16px;
+  color: #f0f0f0;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+.testimonial-item p {
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* About Us Section with Subjects List (No Image) */
 .about-section {
-  background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
-  padding: 80px 20px;
+  background-color: #8a2ce2;  /* Purple background */
+  padding: 120px 20px;
 }
 
 .about-container {
@@ -233,7 +237,7 @@
 .about-text {
   flex: 1;
   min-width: 300px;
-  color: #0D47A1; /* Dark blue for text */
+  color: #fff;
 }
 
 .about-text h2 {
@@ -248,34 +252,47 @@
   line-height: 1.8;
 }
 
-.about-btn {
-  background: #0D47A1;
-  color: #fff;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
+/* Removed the Learn More button */
 
-.about-btn:hover {
-  background: #002171;
-}
-
-.about-image {
+/* New Subjects List */
+.about-subjects {
   flex: 1;
   min-width: 300px;
-  display: flex;
-  justify-content: center;
+  text-align: center;
 }
 
-.about-image img {
-  width: 100%;
-  max-width: 500px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+.about-subjects h3 {
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 15px;
 }
+
+.subjects-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.subjects-list li {
+  background-color: #fff;
+  color: #8a2ce2;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.subjects-list li:hover {
+  background-color: #8a2ce2;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Updated What We Offer Button */
 .what-we-offer-button {
   width: 170px;
@@ -287,7 +304,7 @@
   font-size: 18px;
   line-height: 50px;
   text-align: center;
-  font-weight: 600; /* 'semi-bold' is not a standard value, so using 600 */
+  font-weight: 600;
   margin-top: 5px;
   margin-bottom: 5px;
   cursor: pointer;
@@ -297,19 +314,6 @@
 
 .what-we-offer-button:hover {
   background-color: black;
-}
-
-/* Additional Styling for Featured Tutors Section */
-.featured-tutors .tutor-cards .tutor-card {
-  background-color: #f0f8ff; /* Light blue background for a fresh look */
-  border: 2px solid #0d47a1;  /* Dark blue border for contrast */
-  border-radius: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.featured-tutors .tutor-cards .tutor-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 /* Utility classes for alternating section backgrounds */
@@ -327,7 +331,7 @@
   color: #fff;
 }
 
-/* Adjust buttons inside purple sections to ensure readability */
+/* Adjust buttons inside purple sections */
 .section-purple .about-btn,
 .section-purple .impact-btn {
   background-color: #fff;
@@ -344,7 +348,7 @@
   background-color: #e0e0e0;
 }
 
-/* Optional: Ensure headings and paragraphs contrast well */
+/* Ensure headings and paragraphs in purple sections contrast well */
 .section-purple h2 {
   color: #fff;
 }
@@ -355,12 +359,12 @@
 
 /* OUR IMPACT SECTION */
 .impact-section {
-  background-color: #8a2ce2;  /* Purple background */
+  background-color: #8a2ce2;
   padding: 100px 20px;
+  text-align: left;
   color: #fff;
   position: relative;
   overflow: hidden;
-  text-align: left;
 }
 
 .impact-grid {
@@ -404,7 +408,6 @@
 }
 
 .impact-stats {
-  /* Right column: counters; we'll stack them vertically */
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -429,7 +432,6 @@
   font-size: 1rem;
   margin-top: 5px;
 }
-
 
 /* Footer */
 .footer {

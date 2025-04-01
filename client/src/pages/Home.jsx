@@ -60,24 +60,32 @@ function Home() {
         </div>
       </section>
 
-      {/* ABOUT US SECTION */}
-      <section id="about" className="section section-purple">
-        <div className="about-container">
-          <div className="about-text">
-            <h2>About Us</h2>
-            <p>
-              At GoTutor Academy, we are dedicated to transforming education. Our platform streamlines tutoring—from scheduling sessions to tracking progress—ensuring a seamless experience for both students and tutors.
-            </p>
-            <p>
-              We believe high-quality tutoring should be accessible and efficient, empowering every learner to reach their full potential.
-            </p>
-            <button className="about-btn">Learn More</button>
-          </div>
-          <div className="about-image">
-            <img src="/assets/about-us.jpg" alt="About GoTutor Academy" />
-          </div>
+    {/* About Us Section */}
+    <section id="about" className="about-section">
+      <div className="about-container">
+        <div className="about-text">
+          <h2>About Us</h2>
+          <p>
+            At GoTutor Academy, we are dedicated to transforming education. Our platform streamlines tutoring—from scheduling sessions to tracking progress—ensuring a seamless experience for both students and tutors.
+          </p>
+          <p>
+            We believe high-quality tutoring should be accessible and efficient, empowering every learner to reach their full potential.
+          </p>
         </div>
-      </section>
+        <div className="about-subjects">
+          <h3>Subjects We Tutor</h3>
+          <ul className="subjects-list">
+            <li>Math</li>
+            <li>Science</li>
+            <li>English</li>
+            <li>History</li>
+            <li>Art</li>
+            <li>Music</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
 
       {/* What We Offer Section */}
       <section id="what-we-offer" className="what-we-offer">
