@@ -150,12 +150,11 @@
 }
 
 /* TESTIMONIALS (REVIEW) SECTION */
-/* Updated testimonial cards with purple background and white text */
+/* Updated: removed divider, added subtle inset shadow */
 .testimonials-container {
   background-color: #fff;
-  padding: 120px 20px; /* Increased padding */
   text-align: center;
-  border-top: 1px solid #ddd;
+  border-top: none;
 }
 
 .testimonials-container h2 {
@@ -173,7 +172,7 @@
 }
 
 .testimonial-item {
-  background-color: #8a2ce2; /* Purple initial color */
+  background-color: #8a2ce2;
   border-radius: 12px;
   padding: 30px;
   max-width: 350px;
@@ -187,7 +186,7 @@
 .testimonial-item:hover {
   transform: translateY(-10px) scale(1.02);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  background-color: #7a25c2; /* Slightly different purple on hover */
+  background-color: #7a25c2;
 }
 
 .testimonial-avatar {
@@ -219,21 +218,28 @@
   margin: 0;
 }
 
-/* About Us Section with Subjects List (No Image) */
+/* ABOUT US SECTION with Subjects List */
+/* This section now fills the viewport and aligns the headings at the top */
 .about-section {
-  background-color: #8a2ce2;  /* Purple background */
+  background-color: #8a2ce2;
   padding: 120px 20px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .about-container {
   display: flex;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   gap: 40px;
-  align-items: center;
+  align-items: baseline;  /* Align headings along baseline */
   flex-wrap: wrap;
 }
 
+/* About Us Text */
 .about-text {
   flex: 1;
   min-width: 300px;
@@ -242,7 +248,7 @@
 
 .about-text h2 {
   font-size: 36px;
-  margin-bottom: 20px;
+  margin: 0 0 20px 0;
   font-weight: bold;
 }
 
@@ -252,71 +258,86 @@
   line-height: 1.8;
 }
 
-/* Removed the Learn More button */
-
-/* New Subjects List */
+/* Subjects Area with Translucent Background */
 .about-subjects {
   flex: 1;
   min-width: 300px;
   text-align: center;
+  align-self: baseline;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .about-subjects h3 {
-  font-size: 28px;
+  font-size: 36px;
+  margin: 0 0 20px 0;
+  font-weight: bold;
   color: #fff;
-  margin-bottom: 15px;
 }
 
+/* Subjects List Grid */
 .subjects-list {
   list-style: none;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  flex-grow: 1;
 }
 
 .subjects-list li {
-  background-color: #fff;
+  background: #fff;
   color: #8a2ce2;
-  padding: 10px 20px;
-  border-radius: 25px;
-  font-size: 14px;
-  font-weight: bold;
-  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .subjects-list li:hover {
-  background-color: #8a2ce2;
+  background: #8a2ce2;
   color: #fff;
   transform: translateY(-3px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Active/Pressed State for Subject Cards */
+.subjects-list li:active {
+  transform: translateY(2px);
+  background: #8a2ce2;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 /* Updated What We Offer Button */
 .what-we-offer-button {
-  width: 170px;
+  min-width: 150px;
+  padding: 0 20px;
   height: 50px;
   border-radius: 25px;
   background-color: #8a2ce2;
   color: white;
-  border: none;
+  border: 2px solid black;
   font-size: 18px;
-  line-height: 50px;
   text-align: center;
   font-weight: 600;
   margin-top: 5px;
   margin-bottom: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  border: 2px solid black;
 }
 
 .what-we-offer-button:hover {
   background-color: black;
 }
 
-/* Utility classes for alternating section backgrounds */
+/* Utility Classes for Alternating Section Backgrounds */
 .section {
   padding: 80px 20px;
 }
@@ -331,7 +352,7 @@
   color: #fff;
 }
 
-/* Adjust buttons inside purple sections */
+/* Adjust Buttons inside Purple Sections */
 .section-purple .about-btn,
 .section-purple .impact-btn {
   background-color: #fff;
@@ -348,7 +369,7 @@
   background-color: #e0e0e0;
 }
 
-/* Ensure headings and paragraphs in purple sections contrast well */
+/* Ensure Headings and Paragraphs in Purple Sections Contrast Well */
 .section-purple h2 {
   color: #fff;
 }
@@ -377,7 +398,7 @@
 }
 
 .impact-text {
-  /* Left column: text and button */
+  /* Left Column: Text and Button */
 }
 
 .impact-text h2 {
