@@ -1,4 +1,4 @@
-/* Main Layout Container */
+/* ------------------ Main Layout Container ------------------ */
 .home-container {
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
   background-color: #fff;
 }
 
-/* Navbar */
+/* ------------------ Navbar ------------------ */
 .nav-main nav {
   height: 80px;
   background: #fff;
@@ -24,12 +24,12 @@
   align-items: center;
 }
 
-/* Home Content */
+/* ------------------ Home (Hero) Section ------------------ */
 .home-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;  /* Taller hero section */
+  padding: 60px 20px;
   background-color: #fff;
   flex: 1;
 }
@@ -42,7 +42,6 @@
   width: 100%;
 }
 
-/* Home Text / CTA */
 .home-text {
   flex: 1;
   text-align: left;
@@ -64,7 +63,6 @@
   margin: 20px 0 30px;
 }
 
-/* CTA Button */
 .cta-button {
   background-color: blueviolet;
   color: white;
@@ -86,14 +84,132 @@
   background-color: black;
 }
 
-/* Home Image */
 .home-image img {
   width: 420px;
   height: 420px;
   object-fit: cover;
 }
 
-/* What We Offer Section */
+/* ------------------ About & Subjects Section ------------------ */
+.about-section {
+  background-color: #8a2ce2;
+  color: #fff;
+  min-height: 90vh;  /* Ensures section fills most of the screen */
+  padding: 120px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+}
+
+.about-content,
+.subjects-list {
+  flex: 1 1 45%;
+  min-width: 300px;
+  box-sizing: border-box;
+}
+
+.about-content h2,
+.subjects-list h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+}
+
+.about-content p {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  margin-bottom: 1em;
+  max-width: 600px;
+}
+
+/* ------------------ About & Subjects Section ------------------ */
+.about-section {
+  background-color: #8a2ce2;
+  color: #fff;
+  padding: 120px 40px;
+
+  /* Ensure columns are side by side and have same height on desktop */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;        /* No wrap so columns stay in one row */
+  align-items: stretch;     /* Stretches columns to match the tallest one */
+  gap: 40px;
+  justify-content: center;
+}
+
+.about-content,
+.subjects-list {
+  flex: 1;
+  min-width: 300px;
+  box-sizing: border-box;
+}
+
+.about-content h2,
+.subjects-list h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+}
+
+.about-content p {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  margin-bottom: 1em;
+  max-width: 600px;
+}
+
+.subjects-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  /* You can still do a grid for the subject items themselves */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1em 2em;
+}
+
+.subjects-list li {
+  display: flex;
+  align-items: center;
+}
+
+.subjects-list li svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.subjects-list li span {
+  margin-left: 0.8em;
+  font-size: 1.2rem;
+}
+
+/* ------------------ Responsive: stack on smaller screens ------------------ */
+@media (max-width: 768px) {
+  .about-section {
+    flex-wrap: wrap;   /* Allow wrapping to stack columns */
+    padding: 60px 20px;
+  }
+
+  .about-content, 
+  .subjects-list {
+    flex: 1 1 100%;
+    margin-bottom: 40px;
+  }
+
+  .subjects-list ul {
+    grid-template-columns: 1fr; /* Single column for mobile */
+  }
+}
+
+.about-illustration img {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+}
+
+/* ------------------ What We Offer Section ------------------ */
 .what-we-offer {
   padding: 100px 20px;
   background-color: #fff;
@@ -108,7 +224,6 @@
   margin-bottom: 60px;
 }
 
-/* What We Offer Cards */
 .about-us-cards {
   display: flex;
   flex-wrap: wrap;
@@ -149,10 +264,82 @@
   font-size: 0.95rem;
 }
 
-/* TESTIMONIALS (REVIEW) SECTION */
-/* Updated: removed divider, added subtle inset shadow */
+/* ------------------ Impact Section ------------------ */
+.impact-section {
+  background-color: #8a2ce2;
+  padding: 100px 20px;
+  text-align: left;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(250px, 300px);
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.impact-text h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.impact-text p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.impact-btn {
+  background: #fff;
+  color: #8a2ce2;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.impact-btn:hover {
+  background: #e0e0e0;
+}
+
+.impact-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-self: center;
+}
+
+.counter {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 30px 40px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.counter .number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.counter .label {
+  display: block;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+/* ------------------ Testimonials Section ------------------ */
 .testimonials-container {
   background-color: #fff;
+  padding: 120px 20px;
   text-align: center;
   border-top: none;
 }
@@ -218,243 +405,7 @@
   margin: 0;
 }
 
-/* ABOUT US SECTION with Subjects List */
-/* This section now fills the viewport and aligns the headings at the top */
-.about-section {
-  background-color: #8a2ce2;
-  padding: 120px 20px;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.about-container {
-  display: flex;
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
-  gap: 40px;
-  align-items: baseline;  /* Align headings along baseline */
-  flex-wrap: wrap;
-}
-
-/* About Us Text */
-.about-text {
-  flex: 1;
-  min-width: 300px;
-  color: #fff;
-}
-
-.about-text h2 {
-  font-size: 36px;
-  margin: 0 0 20px 0;
-  font-weight: bold;
-}
-
-.about-text p {
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-  line-height: 1.8;
-}
-
-/* Subjects Area with Translucent Background */
-.about-subjects {
-  flex: 1;
-  min-width: 300px;
-  text-align: center;
-  align-self: baseline;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.about-subjects h3 {
-  font-size: 36px;
-  margin: 0 0 20px 0;
-  font-weight: bold;
-  color: #fff;
-}
-
-/* Subjects List Grid */
-.subjects-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
-  flex-grow: 1;
-}
-
-.subjects-list li {
-  background: #fff;
-  color: #8a2ce2;
-  padding: 12px 20px;
-  border-radius: 20px;
-  font-size: 16px;
-  font-weight: 600;
-  text-align: center;
-  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.subjects-list li:hover {
-  background: #8a2ce2;
-  color: #fff;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Active/Pressed State for Subject Cards */
-.subjects-list li:active {
-  transform: translateY(2px);
-  background: #8a2ce2;
-  color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Updated What We Offer Button */
-.what-we-offer-button {
-  min-width: 150px;
-  padding: 0 20px;
-  height: 50px;
-  border-radius: 25px;
-  background-color: #8a2ce2;
-  color: white;
-  border: 2px solid black;
-  font-size: 18px;
-  text-align: center;
-  font-weight: 600;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.what-we-offer-button:hover {
-  background-color: black;
-}
-
-/* Utility Classes for Alternating Section Backgrounds */
-.section {
-  padding: 80px 20px;
-}
-
-.section-white {
-  background-color: #fff;
-  color: #333;
-}
-
-.section-purple {
-  background-color: #8a2ce2;
-  color: #fff;
-}
-
-/* Adjust Buttons inside Purple Sections */
-.section-purple .about-btn,
-.section-purple .impact-btn {
-  background-color: #fff;
-  color: #8a2ce2;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.section-purple .about-btn:hover,
-.section-purple .impact-btn:hover {
-  background-color: #e0e0e0;
-}
-
-/* Ensure Headings and Paragraphs in Purple Sections Contrast Well */
-.section-purple h2 {
-  color: #fff;
-}
-
-.section-purple p {
-  color: #f0f0f0;
-}
-
-/* OUR IMPACT SECTION */
-.impact-section {
-  background-color: #8a2ce2;
-  padding: 100px 20px;
-  text-align: left;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-}
-
-.impact-grid {
-  display: grid;
-  grid-template-columns: 1fr minmax(250px, 300px);
-  gap: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: center;
-}
-
-.impact-text {
-  /* Left Column: Text and Button */
-}
-
-.impact-text h2 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  font-weight: bold;
-}
-
-.impact-text p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  line-height: 1.6;
-}
-
-.impact-btn {
-  background: #fff;
-  color: #8a2ce2;
-  padding: 15px 40px;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.impact-btn:hover {
-  background: #e0e0e0;
-}
-
-.impact-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-self: center;
-}
-
-.counter {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 30px 40px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.counter .number {
-  display: block;
-  font-size: 2.5rem;
-  font-weight: bold;
-}
-
-.counter .label {
-  display: block;
-  font-size: 1rem;
-  margin-top: 5px;
-}
-
-/* Footer */
+/* ------------------ Footer ------------------ */
 .footer {
   background-color: #fff;
   color: #333;
@@ -487,4 +438,58 @@
 .footer-copyright {
   font-size: 12px;
   margin-top: 10px;
+}
+
+/* ------------------ Utility Classes ------------------ */
+.section {
+  padding: 80px 20px;
+}
+
+.section-white {
+  background-color: #fff;
+  color: #333;
+}
+
+.section-purple {
+  background-color: #8a2ce2;
+  color: #fff;
+}
+
+.section-purple .about-btn,
+.section-purple .impact-btn {
+  background-color: #fff;
+  color: #8a2ce2;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.section-purple .about-btn:hover,
+.section-purple .impact-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.section-purple h2 {
+  color: #fff;
+}
+
+.section-purple p {
+  color: #f0f0f0;
+}
+
+/* ------------------ Responsive ------------------ */
+@media (max-width: 768px) {
+  .about-section {
+    flex-direction: column;
+    padding: 2rem;
+  }
+  .about-content,
+  .subjects-list {
+    flex: 1 1 100%;
+  }
+  .subjects-list ul {
+    grid-template-columns: 1fr;
+  }
 }

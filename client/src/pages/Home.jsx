@@ -1,16 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar'; 
 import Footer from '../components/Footer'; 
-import "./Home.css";
 import ReviewSection from '../components/ReviewSection';
-import HomeImage from '../assets/HomeImage131.webp';
 import RegisterOverlay from '../components/RegisterOverlayButton';
 import CtaButtonOverlay from '../components/CtaButtonOverlay';
+import CommunityButton from '../components/CommunityButton';
+import HomeImage from '../assets/HomeImage131.webp';
 import SmartSceduling from '../assets/SmartSceduling.webp';
 import PTracking from '../assets/PTracking.webp';
 import Pay from '../assets/Pay.webp';
 import Book from '../assets/Book.webp';
-import { useNavigate } from 'react-router-dom';
+import { 
+  CalculatorIcon, 
+  ScienceIcon, 
+  BookIcon, 
+  GlobeIcon, 
+  ComputerIcon, 
+  SchoolIcon 
+} from '../components/Icons';
+import './Home.css';
 
 function parseJwt(token) {
   try {
@@ -42,7 +51,7 @@ function Home() {
     <div className="home-container">
       <Navbar />
 
-      {/* CTA BUTTON / HERO SECTION */}
+      {/* CTA / HERO SECTION */}
       <section id="hero" className="section section-white">
         <div className="home-content">
           <div className="home-section-main">
@@ -60,32 +69,33 @@ function Home() {
         </div>
       </section>
 
-    {/* About Us Section */}
-    <section id="about" className="about-section">
-      <div className="about-container">
-        <div className="about-text">
+      {/* About & Subjects Section */}
+      <section className="about-section">
+        {/* About Us Content */}
+        <div className="about-content">
           <h2>About Us</h2>
           <p>
-            At GoTutor Academy, we are dedicated to transforming education. Our platform streamlines tutoring—from scheduling sessions to tracking progress—ensuring a seamless experience for both students and tutors.
+            Our tutoring platform connects students with expert tutors for personalized learning. 
+            We believe in building confidence through knowledge, offering one-on-one sessions tailored to each student’s needs.
           </p>
           <p>
-            We believe high-quality tutoring should be accessible and efficient, empowering every learner to reach their full potential.
+            With a focus on strong fundamentals and interactive teaching, we help learners excel in their courses and foster a love of learning.
           </p>
         </div>
-        <div className="about-subjects">
-          <h3>Subjects We Tutor</h3>
-          <ul className="subjects-list">
-            <li>Math</li>
-            <li>Science</li>
-            <li>English</li>
-            <li>History</li>
-            <li>Art</li>
-            <li>Music</li>
+
+        {/* Subjects We Tutor List */}
+        <div className="subjects-list">
+          <h2>Subjects We Tutor</h2>
+          <ul>
+            <li><CalculatorIcon /><span>Mathematics</span></li>
+            <li><ScienceIcon /><span>Science</span></li>
+            <li><BookIcon /><span>English Literature</span></li>
+            <li><GlobeIcon /><span>Social Studies</span></li>
+            <li><ComputerIcon /><span>Computer Science</span></li>
+            <li><SchoolIcon /><span>Test Prep</span></li>
           </ul>
         </div>
-      </div>
-    </section>
-
+      </section>
 
       {/* What We Offer Section */}
       <section id="what-we-offer" className="what-we-offer">
@@ -116,8 +126,7 @@ function Home() {
         </div>
       </section>
 
-
-      {/* OUR IMPACT SECTION */}
+      {/* Our Impact Section */}
       <section id="impact" className="impact-section">
         <div className="impact-grid">
           <div className="impact-text">
@@ -125,7 +134,9 @@ function Home() {
             <p>
               We empower learners and educators worldwide. Our platform fosters success by connecting students with dedicated tutors, resulting in thousands of productive sessions every day.
             </p>
-            <button className="impact-btn">Join Our Community</button>
+            <button className="impact-btn" onClick={() => setShowPopup(true)}>
+              Join Our Community
+            </button>
           </div>
           <div className="impact-stats">
             <div className="counter">
@@ -144,15 +155,12 @@ function Home() {
         </div>
       </section>
 
-
-
-
-      {/* SEE WHAT OTHERS HAVE TO SAY SECTION (TESTIMONIALS) */}
+      {/* Testimonials Section */}
       <section id="testimonials" className="section section-white">
         <ReviewSection />
       </section>
 
-      {showPopup && <RegisterOverlay closePopup={closePopup} />}
+      {showPopup && <CommunityButton onClose={closePopup} />}
       <Footer />
     </div>
   );
