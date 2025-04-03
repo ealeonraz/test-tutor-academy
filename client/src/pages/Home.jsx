@@ -17,7 +17,15 @@ import {
   BookIcon, 
   GlobeIcon, 
   ComputerIcon, 
-  SchoolIcon 
+  SchoolIcon,
+  HistoryIcon,      // Existing subject
+  ArtIcon,          // Existing subject
+  MusicIcon,        // Existing subject
+  LanguagesIcon,    // Existing subject
+  ChemistryIcon,    // New subject
+  BiologyIcon,      // New subject
+  EconomicsIcon,    // New subject
+  PhilosophyIcon    // New subject
 } from '../components/Icons';
 import './Home.css';
 
@@ -93,6 +101,15 @@ function Home() {
             <li><GlobeIcon /><span>Social Studies</span></li>
             <li><ComputerIcon /><span>Computer Science</span></li>
             <li><SchoolIcon /><span>Test Prep</span></li>
+            <li><HistoryIcon /><span>History</span></li>
+            <li><ArtIcon /><span>Art</span></li>
+            <li><MusicIcon /><span>Music</span></li>
+            <li><LanguagesIcon /><span>Foreign Languages</span></li>
+            {/* New additional subjects */}
+            <li><ChemistryIcon /><span>Chemistry</span></li>
+            <li><BiologyIcon /><span>Biology</span></li>
+            <li><EconomicsIcon /><span>Economics</span></li>
+            <li><PhilosophyIcon /><span>Philosophy</span></li>
           </ul>
         </div>
       </section>
