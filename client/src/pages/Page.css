@@ -1,8 +1,4 @@
-:root {
---primary: #D0BCFF;
-    /* Light purple */
---secondary: #925FE2;
-}
+
 /* Main Layout Container */
 /* Media Queries */
 @media screen and (max-width: 768px) {
@@ -28,7 +24,7 @@
 /* Student Dashboard Content */
 .student-dashboard-content {
   align-items: center;
-  background-color: var(--primary);
+  background-color: #D0BCFF;
   display: flex;
   flex: 1;
   /* Ensures it takes remaining space */
@@ -89,8 +85,8 @@
 }
 
 .search-bar:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 5px var(--primary);
+  border-color: #D0BCFF;
+  box-shadow: 0 0 5px #D0BCFF;
   /* Highlight the input on focus */
 }
 
@@ -165,7 +161,7 @@
 
 .your-tutors-content {
   align-items: center;
-  background-color: var(--primary);
+  background-color: #D0BCFF;
   display: flex;
   flex: 1;
   /* Ensures it takes remaining space */
