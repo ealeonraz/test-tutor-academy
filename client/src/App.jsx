@@ -14,7 +14,6 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/studentDashboard" element={<StudentDashboardHome />} />
       <Route path="/studentDashboard/yourTutors" element={<SDH_yourTutors />} />
-      <Route path="/studentDashboard/SearchTutorResults" element={<SearchTutorResults />} />
       <Route path="/feedback" element={<Feedback/>}/>
     </Routes>
   );
