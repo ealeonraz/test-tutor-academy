@@ -26,13 +26,22 @@ export default function Navbar() {
         
          {/* Buttons container on the right */}
     <div className="nav-buttons-container">
+      <RegisterOverlay />
+      <LoginOverlayButton onLoginSuccess={handleLoginSuccess} />
       <button className="what-we-offer-button" onClick={scrollToOffer}>
         What We Offer
       </button>
-      <RegisterOverlay />
-      <LoginOverlayButton onLoginSuccess={handleLoginSuccess} />
     </div>
       </nav>
     </div>
   );
 }
+
+{/*
+        <NavLink to = "/"> 
+        Home
+         </NavLink>
+        <button onClick = {scrollToAbout} className = "about-button">
+          About Us
+        </button>
+        */}

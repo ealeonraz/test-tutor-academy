@@ -1,3 +1,11 @@
+/* ------------------ Variables ------------------ */
+:root {
+  /* Light purple */
+  --primary: #D0BCFF;
+  /* Vibrant purple */
+  --secondary: #925FE2;
+}
+
 /* ------------------ Main Layout Container ------------------ */
 .home-container {
   display: flex;
@@ -64,7 +72,7 @@
 }
 
 .cta-button {
-  background-color: blueviolet;
+  background-color: var(--secondary);
   color: white;
   border: 3px solid black;
   padding: 20px;
@@ -94,7 +102,7 @@
 .about-section {
   background-color: #8a2ce2;
   color: #fff;
-  min-height: 90vh;  /* Ensures section fills most of the screen */
+  min-height: 90vh;
   padding: 120px 40px;
   display: flex;
   flex-wrap: wrap;
@@ -123,17 +131,15 @@
   max-width: 600px;
 }
 
-/* ------------------ About & Subjects Section ------------------ */
+/* ------------------ About & Subjects Section (Reverted Layout) ------------------ */
 .about-section {
   background-color: #8a2ce2;
   color: #fff;
   padding: 120px 40px;
-
-  /* Ensure columns are side by side and have same height on desktop */
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;        /* No wrap so columns stay in one row */
-  align-items: stretch;     /* Stretches columns to match the tallest one */
+  flex-wrap: nowrap;
+  align-items: stretch;
   gap: 40px;
   justify-content: center;
 }
@@ -163,8 +169,6 @@
   list-style: none;
   padding: 0;
   margin: 0;
-
-  /* You can still do a grid for the subject items themselves */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1em 2em;
@@ -188,18 +192,16 @@
 /* ------------------ Responsive: stack on smaller screens ------------------ */
 @media (max-width: 768px) {
   .about-section {
-    flex-wrap: wrap;   /* Allow wrapping to stack columns */
+    flex-wrap: wrap;
     padding: 60px 20px;
   }
-
   .about-content, 
   .subjects-list {
     flex: 1 1 100%;
     margin-bottom: 40px;
   }
-
   .subjects-list ul {
-    grid-template-columns: 1fr; /* Single column for mobile */
+    grid-template-columns: 1fr;
   }
 }
 
@@ -335,99 +337,6 @@
   font-size: 1rem;
   margin-top: 5px;
 }
-/* ------------------ Modal CSS ------------------ */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #fff;
-  border-radius: 12px;
-  max-width: 600px;
-  width: 90%;
-  padding: 20px 30px;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  font-family: Arial, sans-serif;
-}
-
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: transparent;
-  border: none;
-  font-size: 28px;
-  color: #8a2ce2;
-  cursor: pointer;
-}
-
-.modal-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.modal-header h2 {
-  font-size: 28px;
-  color: #8a2ce2;
-  margin: 0;
-}
-
-.modal-header p {
-  font-size: 16px;
-  color: #555;
-  margin-top: 10px;
-}
-
-.community-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.form-row {
-  display: flex;
-  gap: 10px;
-}
-
-.community-form input {
-  padding: 12px 15px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  flex: 1;
-}
-
-.wide-black {
-  background-color: blueviolet;
-  color: white;
-  font-size: 18px;
-  border-radius: 25px;
-  height: 50px;
-  width: 100%;
-  border: 2px solid black;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.wide-black:hover {
-  background-color: black;
-}
-
-.error-message {
-  color: rgb(255, 82, 82);
-  font-size: 14px;
-  text-align: center;
-}
 
 /* ------------------ Testimonials Section ------------------ */
 .testimonials-container {
@@ -496,9 +405,113 @@
   margin: 0;
 }
 
+/* ------------------ Tutor Spotlight Section (Optional) ------------------ */
+.tutor-spotlight {
+  background-color: #f7f7f7;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.tutor-spotlight-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tutor-spotlight h2 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.tutor-spotlight p {
+  font-size: 18px;
+  margin-bottom: 40px;
+  color: #555;
+}
+
+.tutor-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.tutor-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  width: 260px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.tutor-card:hover {
+  transform: translateY(-5px);
+}
+
+.tutor-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.tutor-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.tutor-card p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* ------------------ Utility Classes ------------------ */
+.section {
+  padding: 80px 20px;
+}
+
+.section-white {
+  background: #fff;
+  color: #333;
+}
+
+.section-purple {
+  background: #8a2ce2;
+  color: #fff;
+}
+
+.section-purple .about-btn,
+.section-purple .impact-btn {
+  background: #fff;
+  color: #8a2ce2;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.section-purple .about-btn:hover,
+.section-purple .impact-btn:hover {
+  background: #e0e0e0;
+}
+
+.section-purple h2 {
+  color: #fff;
+}
+
+.section-purple p {
+  color: #f0f0f0;
+}
+
 /* ------------------ Footer ------------------ */
 .footer {
-  background-color: #fff;
+  background: #fff;
   color: #333;
   padding: 20px;
   text-align: center;
@@ -529,45 +542,6 @@
 .footer-copyright {
   font-size: 12px;
   margin-top: 10px;
-}
-
-/* ------------------ Utility Classes ------------------ */
-.section {
-  padding: 80px 20px;
-}
-
-.section-white {
-  background-color: #fff;
-  color: #333;
-}
-
-.section-purple {
-  background-color: #8a2ce2;
-  color: #fff;
-}
-
-.section-purple .about-btn,
-.section-purple .impact-btn {
-  background-color: #fff;
-  color: #8a2ce2;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.section-purple .about-btn:hover,
-.section-purple .impact-btn:hover {
-  background-color: #e0e0e0;
-}
-
-.section-purple h2 {
-  color: #fff;
-}
-
-.section-purple p {
-  color: #f0f0f0;
 }
 
 /* ------------------ Responsive ------------------ */

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Navbar from '../components/logged-in-main-navbar';
 import Footer from '../components/Footer';
-import './SearchResults.css';
+import './SearchResults.css'; // Optional CSS for styling
 
 function SearchResults() {
   const [searchParams] = useSearchParams();

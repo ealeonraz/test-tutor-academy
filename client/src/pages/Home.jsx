@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar'; 
-import Footer from '../components/Footer'; 
+
+// Components
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import ReviewSection from '../components/ReviewSection';
 import RegisterOverlay from '../components/RegisterOverlayButton';
 import CtaButtonOverlay from '../components/CtaButtonOverlay';
+import LoginOverlayButton from "../components/LoginOverlayButton";
+import RegisterOverlayButton from "../components/RegisterOverlayButton";
 import CommunityButton from '../components/CommunityButton';
+// Images
 import HomeImage from '../assets/HomeImage131.webp';
 import SmartSceduling from '../assets/SmartSceduling.webp';
 import PTracking from '../assets/PTracking.webp';
 import Pay from '../assets/Pay.webp';
 import Book from '../assets/Book.webp';
+
+
+// Icons (including new ones)
 import { 
   CalculatorIcon, 
   ScienceIcon, 
@@ -18,17 +26,23 @@ import {
   GlobeIcon, 
   ComputerIcon, 
   SchoolIcon,
-  HistoryIcon,      // Existing subject
-  ArtIcon,          // Existing subject
-  MusicIcon,        // Existing subject
-  LanguagesIcon,    // Existing subject
-  ChemistryIcon,    // New subject
-  BiologyIcon,      // New subject
-  EconomicsIcon,    // New subject
-  PhilosophyIcon    // New subject
+  HistoryIcon,
+  ArtIcon,
+  MusicIcon,
+  LanguagesIcon,
+  ChemistryIcon,
+  BiologyIcon,
+  EconomicsIcon,
+  PhilosophyIcon
 } from '../components/Icons';
-import './Home.css';
 
+// Styles
+import "./Home.css";
+import "./Page.css";
+
+/**
+ * Function to parse JWT token
+ */
 function parseJwt(token) {
   try {
     const base64url = token.split(".")[1];
@@ -48,8 +62,28 @@ function parseJwt(token) {
 
 function Home() {
   const [showPopup, setShowPopup] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  // Token check to redirect logged-in users
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded = parseJwt(token);
+        console.log("User role:", decoded.role);
+        if (decoded.role === "student") {
+          navigate("/studentDashboard/");
+        } else {
+          console.error("Unknown User role:", decoded.role);
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Error: Failed to get user info", error);
+        localStorage.removeItem('token');
+        navigate("/");
+      }
+    }
+  }, [navigate]);
 
   const closePopup = () => {
     setShowPopup(false);
@@ -57,25 +91,27 @@ function Home() {
 
   return (
     <div className="home-container">
+      {/* Navigation Bar & Overlays */}
       <Navbar />
 
       {/* CTA / HERO SECTION */}
-      <section id="hero" className="section section-white">
-        <div className="home-content">
-          <div className="home-section-main">
-            <div className="home-text">
-              <h1 className="cta-heading">Learn More, Teach with Ease</h1>
-              <p className="cta-description">
-                A platform built for tutors and students to succeed by simplifying scheduling, tracking progress, and streamlining communication.
-              </p>
-              <CtaButtonOverlay />
-            </div>
-            <div className="home-image">
-              <img src={HomeImage} alt="Home Visual" />
-            </div>
+      <main className="home-content">
+        <div className="home-section-main">
+          <div className="home-text">
+            <h1 className="cta-heading">
+              Learn More, <br /> Teach with Ease
+            </h1>
+            <p className="cta-description">
+              A platform built for tutors and students to succeed by simplifying scheduling, tracking progress, and streamlining communication.
+            </p>
+            <CtaButtonOverlay />
+          </div>
+          <div className="home-image">
+            <img src={HomeImage} alt="Learning Platform" />
           </div>
         </div>
-      </section>
+      </main>
+
 
       {/* About & Subjects Section */}
       <section className="about-section">
@@ -83,7 +119,7 @@ function Home() {
         <div className="about-content">
           <h2>About Us</h2>
           <p>
-            Our tutoring platform connects students with expert tutors for personalized learning. 
+            Our tutoring platform connects students with expert tutors for personalized learning.
             We believe in building confidence through knowledge, offering one-on-one sessions tailored to each student’s needs.
           </p>
           <p>
@@ -105,7 +141,6 @@ function Home() {
             <li><ArtIcon /><span>Art</span></li>
             <li><MusicIcon /><span>Music</span></li>
             <li><LanguagesIcon /><span>Foreign Languages</span></li>
-            {/* New additional subjects */}
             <li><ChemistryIcon /><span>Chemistry</span></li>
             <li><BiologyIcon /><span>Biology</span></li>
             <li><EconomicsIcon /><span>Economics</span></li>
@@ -116,24 +151,22 @@ function Home() {
 
       {/* What We Offer Section */}
       <section id="what-we-offer" className="what-we-offer">
-        <div className="offer-header">
-          <h2>What We Offer</h2>
-        </div>
+        <h2>What We Offer</h2>
         <div className="about-us-cards">
           <div className="about-card">
             <img src={SmartSceduling} alt="Smart Scheduling" />
             <h4>Smart Scheduling</h4>
-            <p>Automated scheduling eliminates conflicts and ensures smooth session planning.</p>
+            <p>Our automated scheduling system eliminates conflicts and ensures smooth session planning.</p>
           </div>
           <div className="about-card">
             <img src={PTracking} alt="Performance Tracking" />
             <h4>Performance Tracking</h4>
-            <p>Track progress with real-time analytics and feedback tools.</p>
+            <p>Students and tutors can track progress with insightful analytics and feedback tools.</p>
           </div>
           <div className="about-card">
             <img src={Pay} alt="Automated Payroll" />
             <h4>Automated Payroll</h4>
-            <p>Simplify payment processing with accurate session tracking.</p>
+            <p>Salary calculations and time tracking made easy for tutors and administrators.</p>
           </div>
           <div className="about-card">
             <img src={Book} alt="Easy Booking" />
@@ -178,6 +211,8 @@ function Home() {
       </section>
 
       {showPopup && <CommunityButton onClose={closePopup} />}
+
+      {/* Footer */}
       <Footer />
     </div>
   );
