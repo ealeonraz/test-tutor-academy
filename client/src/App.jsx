@@ -5,8 +5,8 @@ import StudentDashboardHome from './pages/studentDashboard';
 import SDH_yourTutors from './pages/SDH-yourTutors';
 import "./App.css";
 import Layout from './components/Layout';
-import Feedback from './pages/Feedback';
-import SearchResults from './pages/SearchResults';
+import Feedback from './pages/Feedback.jsx'
+
 function App() {
   return (
 
@@ -14,8 +14,8 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/studentDashboard" element={<StudentDashboardHome />} />
       <Route path="/studentDashboard/yourTutors" element={<SDH_yourTutors />} />
-      <Route path="/feedback" element={<Feedback />} />
-      <Route path="/search" element={<SearchResults />} />
+      <Route path="/studentDashboard/SearchTutorResults" element={<SearchTutorResults />} />
+      <Route path="/feedback" element={<Feedback/>}/>
     </Routes>
   );
 }
