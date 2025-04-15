@@ -10,13 +10,13 @@ import CtaButtonOverlay from '../components/CtaButtonOverlay';
 import LoginOverlayButton from "../components/LoginOverlayButton";
 import RegisterOverlayButton from "../components/RegisterOverlayButton";
 import CommunityButton from '../components/CommunityButton';
+
 // Images
 import HomeImage from '../assets/HomeImage131.webp';
 import SmartSceduling from '../assets/SmartSceduling.webp';
 import PTracking from '../assets/PTracking.webp';
 import Pay from '../assets/Pay.webp';
 import Book from '../assets/Book.webp';
-
 
 // Icons (including new ones)
 import { 
@@ -72,7 +72,7 @@ function Home() {
         const decoded = parseJwt(token);
         console.log("User role:", decoded.role);
         if (decoded.role === "student") {
-          navigate("/studentDashboard/");
+          navigate("/student-dashboard/");
         } else {
           console.error("Unknown User role:", decoded.role);
           navigate("/");

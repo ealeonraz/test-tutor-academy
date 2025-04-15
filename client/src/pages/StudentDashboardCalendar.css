@@ -1,0 +1,87 @@
+/* Overall dashboard page style */
+.dashboard-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Use your dashboard’s background – for example, a purple gradient */
+    background: linear-gradient(180deg, #b174f5 0%, #8a2ce2 100%);
+  }
+  
+  /* Content area below the navbar */
+  .dashboard-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  /* Header Section above the main content */
+  .header-section {
+    text-align: center;
+    padding: 1rem 0;
+    color: #fff;
+  }
+  .header-section h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  .header-section p {
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  /* Main content area with two columns (sidebar and calendar) */
+  .main-content {
+    display: flex;
+    margin-top: 20px;
+    gap: 20px;
+  }
+  
+  /* Sidebar styling */
+  .sidebar {
+    flex: 1;
+    max-width: 300px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .sidebar .widget {
+    margin-bottom: 20px;
+  }
+  .sidebar .widget h2 {
+    font-size: 1.4rem;
+    color: #8a2ce2;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+  .sidebar .widget ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .sidebar .widget ul li {
+    padding: 5px 0;
+    border-bottom: 1px dashed #ccc;
+    font-size: 0.9rem;
+  }
+  
+  /* Calendar wrapper styling */
+  .calendar-wrapper {
+    flex: 3;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .main-content {
+      flex-direction: column;
+    }
+    .sidebar {
+      max-width: 100%;
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+  }
+  

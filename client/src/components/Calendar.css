@@ -1,0 +1,144 @@
+/* Calendar container styling */
+.calendar-section {
+    width: 100%;
+    padding: 1em;
+    background-color: #fff;         /* white background for contrast */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin: 2em 0;
+  }
+  @media (max-width: 768px) {
+    .calendar-section {
+      padding: 0.5em;
+    }
+  }
+  
+  /* FullCalendar theme overrides */
+  .fc-toolbar {
+    background-color: #8a2ce2;      /* primary color background */
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+    padding: 0.5em;
+  }
+  .fc-toolbar h2, .fc-toolbar .fc-button {
+    color: #fff;
+  }
+  .fc-button.fc-button-primary {
+    background-color: #8a2ce2;
+    border: none;
+  }
+  .fc-button.fc-button-primary:hover, 
+  .fc-button.fc-button-primary:focus {
+    background-color: #7a25c2;      /* darker shade on hover */
+    color: #fff;
+  }
+  .fc-button.fc-button-primary:disabled {
+    background-color: #ccc;
+  }
+  .fc-day-today { 
+    background-color: rgba(138,44,226, 0.1); /* highlight today with translucent primary */
+  }
+  .fc-event {
+    background-color: #8a2ce2 !important;
+    border: 1px solid #7a25c2 !important;
+    color: #fff !important;
+    border-radius: 4px;
+    padding: 2px 4px;
+  }
+  .fc-event:hover {
+    opacity: 0.9;
+  }
+  
+  /* Modal overlay and content (reusing existing modal styles) */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .modal-content {
+    background: #fff;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    padding: 20px 30px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    font-family: Arial, sans-serif;
+  }
+  .modal-close {
+    position: absolute;
+    top: 10px; right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    color: #8a2ce2;
+    cursor: pointer;
+  }
+  .modal-header h2 {
+    font-size: 24px;
+    color: #8a2ce2;
+    margin: 0 0 0.5em;
+  }
+  .modal-header p {
+    font-size: 16px;
+    color: #555;
+  }
+  .form-group {
+    margin: 1em 0;
+  }
+  .form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5em;
+    color: #333;
+  }
+  .booking-form p, .feedback-form p {
+    margin-bottom: 1em;
+  }
+  .booking-form input[type="text"],
+  .feedback-form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--secondary, #ccc);
+    border-radius: 4px;
+    font: inherit;
+  }
+  .booking-form input:focus, 
+  .feedback-form textarea:focus {
+    outline: none;
+    border-color: var(--primary, #8a2ce2);
+    box-shadow: 0 0 5px rgba(138,44,226,0.5);
+  }
+  .modal-actions {
+    text-align: right;
+    margin-top: 1em;
+  }
+  .btn {
+    display: inline-block;
+    font-size: 14px;
+    padding: 8px 16px;
+    margin-left: 0.5em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background-color: #8a2ce2;
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background-color: #7a25c2;
+  }
+  .btn-danger {
+    background-color: #e44d4d;
+    color: #fff;
+  }
+  .btn-danger:hover {
+    background-color: #c43d3d;
+  }
+  
