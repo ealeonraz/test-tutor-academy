@@ -1,144 +1,230 @@
-/* Calendar container styling */
-.calendar-section {
+/********************************************/
+/* FULLCALENDAR: Month/Week View Adjustments */
+/********************************************/
+
+/* Make day cells white in Month View so text is readable. */
+.fc-daygrid-day-frame {
+  background-color: #fff !important;
+  color: #333 !important;
+  /* Keep a consistent text color. */
+  font-size: 0.9rem;
+}
+
+/* Style the date number in month cells more clearly. */
+.fc-daygrid-day-number {
+  font-weight: bold; 
+  color: #666 !important;
+  margin-bottom: 2px;
+  font-size: 0.8rem;
+}
+
+/* If you want to keep a subtle purple highlight for 'today' */
+.fc-day-today {
+  background-color: rgba(138, 44, 226, 0.05) !important; 
+  /* Slightly tinted, not too dark. */
+}
+
+/* Adjust the event styling in month view (the 'title' text). */
+.fc-daygrid-event .fc-event-main {
+  font-size: 0.85rem;   /* slightly smaller text */
+  font-weight: 500;     /* moderate weight */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* For timeGrid (week view), ensure background is not overly purple. */
+.fc-timegrid-slots {
+  background-color: #fafafa !important; 
+  /* A light background for clarity. */
+}
+
+/* If you want a custom background for the main timetable area: */
+.fc-timegrid-slot-lane {
+  background-color: #fff !important;
+}
+
+/* Keep your event color styling. 
+   Slightly reduce background intensity for better contrast with text. */
+.fc-event {
+  background-color: #8a2ce2 !important; /* main purple */
+  border: 1px solid #7a25c2 !important;
+  color: #fff !important;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.fc-event:hover {
+  opacity: 0.9;
+}
+
+/********************************************/
+/* CALENDARSIDEBAR: Basic Text & Layout */
+/********************************************/
+.sidebar {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 280px; /* or your preference */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  overflow-y: auto;
+}
+.sidebar .widget {
+  margin-bottom: 1.5rem;
+}
+.sidebar .widget h2 {
+  font-size: 1.1rem;
+  color: #8a2ce2;
+  margin-bottom: 0.5rem;
+}
+.sidebar .widget ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar .widget ul li {
+  margin: 0.4rem 0;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.sidebar .widget ul li:hover {
+  text-decoration: underline;
+}
+
+/********************************************/
+/* EVENTDETAILSMODAL: Clean Up Text & Layout */
+/********************************************/
+.modal-content {
+  background: #fff;
+  color: #333;
+  padding: 1.5rem;
+  width: 500px;
+  max-width: 90%;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #8a2ce2;
+}
+.modal-header h2 {
+  font-size: 1.4rem;
+  color: #8a2ce2;
+  margin: 0 0 0.4rem;
+}
+.modal-header p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Body sections spacing */
+.modal-body {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+.feedback-section, .notes-section, .files-section {
+  margin-bottom: 1.5rem;
+}
+.feedback-section h3,
+.notes-section h3,
+.files-section h3 {
+  font-size: 1.1rem;
+  color: #8a2ce2;
+  margin-bottom: 0.5rem;
+}
+
+/* Buttons in the upcoming actions area */
+.upcoming-actions {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+.upcoming-actions .btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+.upcoming-actions .btn-primary {
+  background-color: #8a2ce2;
+  color: #fff;
+}
+.upcoming-actions .btn-primary:hover {
+  background-color: #7a25c2;
+}
+.upcoming-actions .btn-outline {
+  background-color: transparent;
+  color: #8a2ce2;
+  border: 2px solid #8a2ce2;
+}
+.upcoming-actions .btn-outline:hover {
+  background-color: #8a2ce2;
+  color: #fff;
+}
+
+/* Feedback textarea, notes textarea styling */
+.feedback-form textarea,
+.notes-section textarea {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+.feedback-form textarea:focus,
+.notes-section textarea:focus {
+  outline: none;
+  border-color: #8a2ce2;
+  box-shadow: 0 0 3px rgba(138,44,226,0.5);
+}
+
+/* Dropzone styling for file uploads */
+.dropzone {
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  border: 2px dashed #ccc;
+  text-align: center;
+  color: #666;
+  border-radius: 4px;
+}
+.dropzone:hover {
+  border-color: #8a2ce2;
+}
+.file-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.file-list li {
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+/********************************************/
+/* MISC REFINEMENTS & RESPONSIVE ADJUSTMENTS */
+/********************************************/
+@media (max-width: 768px) {
+  /* Let the sidebar stack over or above the calendar on mobile */
+  .main-content {
+    flex-direction: column;
+  }
+  .sidebar {
     width: 100%;
-    padding: 1em;
-    background-color: #fff;         /* white background for contrast */
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin: 2em 0;
+    margin-bottom: 1rem;
   }
-  @media (max-width: 768px) {
-    .calendar-section {
-      padding: 0.5em;
-    }
-  }
-  
-  /* FullCalendar theme overrides */
-  .fc-toolbar {
-    background-color: #8a2ce2;      /* primary color background */
-    color: #fff;
-    border-radius: 8px 8px 0 0;
-    padding: 0.5em;
-  }
-  .fc-toolbar h2, .fc-toolbar .fc-button {
-    color: #fff;
-  }
-  .fc-button.fc-button-primary {
-    background-color: #8a2ce2;
-    border: none;
-  }
-  .fc-button.fc-button-primary:hover, 
-  .fc-button.fc-button-primary:focus {
-    background-color: #7a25c2;      /* darker shade on hover */
-    color: #fff;
-  }
-  .fc-button.fc-button-primary:disabled {
-    background-color: #ccc;
-  }
-  .fc-day-today { 
-    background-color: rgba(138,44,226, 0.1); /* highlight today with translucent primary */
-  }
-  .fc-event {
-    background-color: #8a2ce2 !important;
-    border: 1px solid #7a25c2 !important;
-    color: #fff !important;
-    border-radius: 4px;
-    padding: 2px 4px;
-  }
-  .fc-event:hover {
-    opacity: 0.9;
-  }
-  
-  /* Modal overlay and content (reusing existing modal styles) */
-  .modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  .modal-content {
-    background: #fff;
-    border-radius: 12px;
-    max-width: 600px;
-    width: 90%;
-    padding: 20px 30px;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    font-family: Arial, sans-serif;
-  }
-  .modal-close {
-    position: absolute;
-    top: 10px; right: 15px;
-    background: transparent;
-    border: none;
-    font-size: 28px;
-    color: #8a2ce2;
-    cursor: pointer;
-  }
-  .modal-header h2 {
-    font-size: 24px;
-    color: #8a2ce2;
-    margin: 0 0 0.5em;
-  }
-  .modal-header p {
-    font-size: 16px;
-    color: #555;
-  }
-  .form-group {
-    margin: 1em 0;
-  }
-  .form-group label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 0.5em;
-    color: #333;
-  }
-  .booking-form p, .feedback-form p {
-    margin-bottom: 1em;
-  }
-  .booking-form input[type="text"],
-  .feedback-form textarea {
+  .calendar-panel {
     width: 100%;
-    padding: 8px;
-    border: 1px solid var(--secondary, #ccc);
-    border-radius: 4px;
-    font: inherit;
   }
-  .booking-form input:focus, 
-  .feedback-form textarea:focus {
-    outline: none;
-    border-color: var(--primary, #8a2ce2);
-    box-shadow: 0 0 5px rgba(138,44,226,0.5);
-  }
-  .modal-actions {
-    text-align: right;
-    margin-top: 1em;
-  }
-  .btn {
-    display: inline-block;
-    font-size: 14px;
-    padding: 8px 16px;
-    margin-left: 0.5em;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .btn-primary {
-    background-color: #8a2ce2;
-    color: #fff;
-  }
-  .btn-primary:hover {
-    background-color: #7a25c2;
-  }
-  .btn-danger {
-    background-color: #e44d4d;
-    color: #fff;
-  }
-  .btn-danger:hover {
-    background-color: #c43d3d;
-  }
-  
+}

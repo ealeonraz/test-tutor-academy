@@ -5,10 +5,8 @@ import "./Feedback.css";
 function Feedback() {
   // currentStep: Tracks the current form step (1, 2, or 3)
   const [currentStep, setCurrentStep] = useState(1);
-  
   // submitted: Flag to indicate whether the form was successfully submitted.
   const [submitted, setSubmitted] = useState(false);
-  
   // formData: Holds all user inputs from the form.
   const [formData, setFormData] = useState({
     name: "",
@@ -21,7 +19,6 @@ function Feedback() {
     improvementAreas: [],
     comments: ""
   });
-
   // Total number of steps in the multi-step form.
   const totalSteps = 3;
 
@@ -209,9 +206,7 @@ function Feedback() {
           <div className="form-step">
             <h2>Additional Feedback</h2>
             <div className="form-group">
-              <label htmlFor="likedMost">
-                What did you like most about your session?
-              </label>
+              <label htmlFor="likedMost">What did you like most about your session?</label>
               <select
                 id="likedMost"
                 name="likedMost"
@@ -276,23 +271,9 @@ function Feedback() {
       <div className="feedback-page">
         <div className="success-card">
           <div className="checkmark-container">
-            <svg
-              className="checkmark"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 52 52"
-            >
-              <circle
-                className="checkmark__circle"
-                cx="26"
-                cy="26"
-                r="25"
-                fill="none"
-              />
-              <path
-                className="checkmark__check"
-                fill="none"
-                d="M14.1 27.2l7.1 7.2 16.7-16.8"
-              />
+            <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+              <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+              <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
             </svg>
           </div>
           <h2>Thank you for your feedback!</h2>
@@ -315,21 +296,13 @@ function Feedback() {
           <div className="button-group">
             {/* Back button (only visible if not on the first step) */}
             {currentStep > 1 && (
-              <button
-                type="button"
-                onClick={handleBack}
-                className="btn back-btn"
-              >
+              <button type="button" onClick={handleBack} className="btn back-btn">
                 Back
               </button>
             )}
             {/* Next button (only visible if not on the final step) */}
             {currentStep < totalSteps && (
-              <button
-                type="button"
-                onClick={handleNext}
-                className="btn next-btn"
-              >
+              <button type="button" onClick={handleNext} className="btn next-btn">
                 Next
               </button>
             )}
