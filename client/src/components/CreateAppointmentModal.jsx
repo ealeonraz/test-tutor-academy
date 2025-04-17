@@ -37,6 +37,7 @@ const AVAILABILITY = {
   ]
 };
 
+
 export default function CreateAppointmentModal({ onClose, onSave }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
@@ -105,11 +106,29 @@ export default function CreateAppointmentModal({ onClose, onSave }) {
         feedbackSubmitted: false,
         feedback: "",
         joinUrl: "",
-        files: []
       }
     };
     onSave(appointmentData);
     setSubmitted(true);
+
+    try {
+      const response = await fetch("http://localhost:4000/api/feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(appointmentData)
+      });
+
+      if(!response.ok){
+        throw new Error("Unable to make appointment")
+      }
+
+      const result = await response.json()
+      setSubmitted(true);
+    }catch(err) {
+      console.error(err);
+    }
   };
 
   const progressPercentage = (currentStep / 2) * 100;

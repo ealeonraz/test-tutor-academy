@@ -7,7 +7,7 @@ export const allAccess = (req, res) => {
   };
    
   export const tutorBoard = (req, res) => {
-    res.status(200).send('Moderator Content.');
+    res.status(200).send('Tutor Content.');
   };
    
   export const adminBoard = (req, res) => {

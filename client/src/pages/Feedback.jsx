@@ -70,7 +70,7 @@ function Feedback() {
     e.preventDefault(); // Prevent default form submission behavior.
     try {
       // Send a POST request to the backend endpoint with formData as JSON.
-      const response = await fetch("http://localhost:4000/feedback", {
+      const response = await fetch("http://localhost:4000/api/feedback", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
