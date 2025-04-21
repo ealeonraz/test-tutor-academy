@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StudentDashboardNavbar from '../components/DashboardNavbar.jsx';
-import FullCalendar from '@fullcalendar/react';  // FullCalendar React component
+import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -10,75 +10,36 @@ import AppointmentForm from '../components/CreateAppointmentModal.jsx';
 import './StudentDashboardCalendar.css';
 
 export default function StudentDashboardCalendar() {
-  // Sample event data (normally from a server)
-  const [events, setEvents] = useState([
-    {
-      id: '1',
-      title: 'Math Tutoring Session',
-      start: new Date(2025, 3, 13, 10, 0),  // Apr 13, 2025 10:00 AM
-      end: new Date(2025, 3, 13, 11, 0),
-      extendedProps: {
-        subject: 'Math',
-        tutor: 'Mr. Alan',
-        feedbackSubmitted: false,
-        feedback: '',
-        joinUrl: 'https://zoom.example.com/abc123',
-        files: []
-      }
-    },
-    {
-      id: '2',
-      title: 'Science Tutoring Session',
-      start: new Date(2025, 3, 14, 14, 0),  // Apr 14, 2025 2:00 PM
-      end: new Date(2025, 3, 14, 15, 0),
-      extendedProps: {
-        subject: 'Science',
-        tutor: 'Dr. Blake',
-        feedbackSubmitted: true,
-        feedback: 'Great session, I learned a lot!',
-        joinUrl: 'https://zoom.example.com/def456',
-        files: []
-      }
-    },
-    {
-      id: '3',
-      title: 'Math Tutoring Session',
-      start: new Date(2025, 3, 16, 9, 0),   // Apr 16, 2025 9:00 AM
-      end: new Date(2025, 3, 16, 10, 0),
-      extendedProps: {
-        subject: 'Math',
-        tutor: 'Mr. Alan',
-        feedbackSubmitted: false,
-        feedback: '',
-        joinUrl: 'https://zoom.example.com/abc123',
-        files: []
-      }
-    },
-    {
-      id: '4',
-      title: 'English Tutoring Session',
-      start: new Date(2025, 3, 18, 11, 0),  // Apr 18, 2025 11:00 AM
-      end: new Date(2025, 3, 18, 12, 0),
-      extendedProps: {
-        subject: 'English',
-        tutor: 'Ms. Chloe',
-        feedbackSubmitted: false,
-        feedback: '',
-        joinUrl: 'https://zoom.example.com/ghi789',
-        files: []
-      }
-    }
-  ]);
-
-  const [selectedEvent, setSelectedEvent] = useState(null); // for event detail view
-  const [showCreateModal, setShowCreateModal] = useState(false); // for creating a new appointment
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const [newEventData, setNewEventData] = useState(null);
 
-  // Handle clicking an existing event (from the calendar or sidebar)
+  const token = localStorage.getItem("token");
+  
+  // Fetch appointments from the database
+  useEffect(() => {
+    fetch("http://localhost:4000/api/appointments", {
+      method: "GET",
+      headers: { "Authorization": `Bearer ${token}` },
+    })
+      .then((res) => res.json())  // Parse as JSON
+      .then((data) => {
+        console.log("Fetched data:", data); // Log the full data returned from the API
+        setEvents(data);  // Set the events state
+      })
+      .catch((error) => console.error("Unable to fetch appointments:", error));
+  }, []);
+  
+  // Log the events state when it's updated
+  useEffect(() => {
+    console.log("Events state:", events);  // Log events state
+  }, [events]);
+  
+
   const handleSelectEvent = (eventInfo) => {
     let eventData = eventInfo;
     if (eventInfo.event) {
-      // Extract data if coming from a FullCalendar API event object
       const ev = eventInfo.event;
       eventData = {
         id: ev.id,
@@ -91,7 +52,6 @@ export default function StudentDashboardCalendar() {
     setSelectedEvent(eventData);
   };
 
-  // Update appointment (e.g. after feedback submission)
   const updateEvent = (eventId, newProps) => {
     setEvents(prevEvents =>
       prevEvents.map(ev =>
@@ -102,13 +62,11 @@ export default function StudentDashboardCalendar() {
     );
   };
 
-  // Delete an appointment
   const deleteEvent = (eventId) => {
     setEvents(prevEvents => prevEvents.filter(ev => ev.id !== eventId));
     setSelectedEvent(null);
   };
 
-  // When a user selects a date range on the calendar, prepopulate new appointment data and show the create modal
   const handleDateSelect = (selectInfo) => {
     setNewEventData({
       title: '',
@@ -126,13 +84,12 @@ export default function StudentDashboardCalendar() {
     setShowCreateModal(true);
   };
 
-  // Also allow appointment creation via a dedicated button
   const handleOpenCreateModal = () => {
     const now = new Date();
     setNewEventData({
       title: '',
       start: now,
-      end: new Date(now.getTime() + 60 * 60 * 1000), // default 1-hour duration
+      end: new Date(now.getTime() + 60 * 60 * 1000),
       extendedProps: {
         subject: '',
         tutor: '',
@@ -145,9 +102,7 @@ export default function StudentDashboardCalendar() {
     setShowCreateModal(true);
   };
 
-  // Save a new appointment from the creation modal
   const handleCreateAppointment = (appointmentData) => {
-    // Generate a new id (for demo purposes; consider using a more robust approach in production)
     const newId = String(events.length + 1);
     setEvents(prevEvents => [
       ...prevEvents,
@@ -160,19 +115,13 @@ export default function StudentDashboardCalendar() {
     <div className="dashboard-page">
       <StudentDashboardNavbar />
       <div className="dashboard-content">
-        {/* Header section with a New Appointment button */}
         <div className="header-section">
           <h1>Your Calendar</h1>
           <p>Manage your tutoring sessions and view upcoming appointments.</p>
-          <button className="new-appointment-btn" onClick={handleOpenCreateModal}>
-            + New Appointment
-          </button>
         </div>
 
-        {/* Main content area: Sidebar + Calendar */}
         <div className="main-content">
           <CalendarSidebar events={events} onSelectEvent={handleSelectEvent} />
-
           <div className="calendar-panel">
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -219,17 +168,15 @@ export default function StudentDashboardCalendar() {
         </div>
       </div>
 
-      {/* Event Details Modal: Pass onDeleteEvent for deletion functionality */}
       {selectedEvent && (
-        <EventDetailsModal 
-          event={selectedEvent} 
-          onClose={() => setSelectedEvent(null)} 
-          onUpdateEvent={updateEvent} 
+        <EventDetailsModal
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+          onUpdateEvent={updateEvent}
           onDeleteEvent={deleteEvent}
         />
       )}
 
-      {/* Create Appointment Modal */}
       {showCreateModal && (
         <AppointmentForm
           initialData={newEventData}

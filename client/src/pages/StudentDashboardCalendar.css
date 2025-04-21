@@ -1,3 +1,11 @@
+/* Define theme tokens scoped to this page */
+.student-dashboard-container {
+  --primary:    #D0BCFF;
+  --secondary:  #925FE2;
+  --grey:       #333333;
+  --light-grey: #ced4da;
+}
+
 /* Overall dashboard page style */
 .dashboard-page {
   display: flex;
@@ -6,25 +14,30 @@
   background: linear-gradient(180deg, #b174f5 0%, #8a2ce2 100%);
 }
 
+/* Main content wrapper */
 .dashboard-content {
   flex: 1;
   padding: 20px;
+  background-color: var(--primary);
 }
 
+/* Header section */
 .header-section {
   text-align: center;
   padding: 1rem 0;
-  color: #fff;
+  /* no base color here so children can override */
 }
 
 .header-section h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+  color: var(--grey);       /* dark gray for readability */
 }
 
 .header-section p {
   font-size: 1rem;
   margin: 0;
+  color: var(--light-grey); /* softer gray for subtitle */
 }
 
 /* New Appointment button styling */
@@ -35,10 +48,11 @@
   border: none;
   border-radius: 4px;
   background: #fff;
-  color: #8a2ce2;
+  color: var(--secondary);
   cursor: pointer;
   transition: background 0.3s;
 }
+
 .new-appointment-btn:hover {
   background: #f0f0f0;
 }
@@ -68,7 +82,7 @@
 
 .sidebar .widget h2 {
   font-size: 1.5rem;
-  color: #8a2ce2;
+  color: var(--secondary);
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -96,7 +110,7 @@
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Modal styles */
+/* Modal overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -109,6 +123,7 @@
   align-items: center;
 }
 
+/* Modal box */
 .modal {
   background: #fff;
   padding: 20px;
@@ -147,6 +162,7 @@
   .main-content {
     flex-direction: column;
   }
+
   .sidebar {
     max-width: 100%;
   }

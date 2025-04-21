@@ -57,6 +57,8 @@ export default function CreateAppointmentModal({ onClose, onSave }) {
   const [appointmentMode, setAppointmentMode] = useState(""); // "Online" or "In-Person"
   const [additionalNotes, setAdditionalNotes] = useState("");
 
+  const token = localStorage.getItem("token");
+
   // Reset dependent states when subject changes.
   useEffect(() => {
     setTutor("");
@@ -112,20 +114,22 @@ export default function CreateAppointmentModal({ onClose, onSave }) {
     setSubmitted(true);
 
     try {
-      const response = await fetch("http://localhost:4000/api/feedback", {
+      const response = await fetch("http://localhost:4000/api/appointments/create", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,  // Sending the token in the Authorization header
+          "Content-Type": "application/json",  // Ensuring the server knows it's JSON data
         },
-        body: JSON.stringify(appointmentData)
+        body: JSON.stringify(appointmentData),  // Sending the actual appointment data
       });
 
       if(!response.ok){
         throw new Error("Unable to make appointment")
       }
 
-      const result = await response.json()
+      const res = await response.json()
       setSubmitted(true);
+      console.log(res)
     }catch(err) {
       console.error(err);
     }
