@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import "../components/overlay/Overlay.css";
+import "../components/Overlay/Overlay.css";
 import "./Page.css"
 import Navbar from "../components/Navbars/Navbar";
 import Footer from "../components/Footer";
