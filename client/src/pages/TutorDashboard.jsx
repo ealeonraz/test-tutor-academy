@@ -1,134 +1,210 @@
 import React, { useState, useEffect } from 'react';
-import Footer from '../components/Footer';
-import TutorDashboardNavbar from '../components/TutorDashboardNavbar';
-import Navbar from '../components/LoggedInNavbar';
-import profilePic from '../assets/mr-satan-pic.webp';  // Default profile picture in case the avatar is missing
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import CalendarSidebar from '../components/TutorCalendarSidebar.jsx';
+import EventDetailsModal from '../components/Modals/EventDetailsModal.jsx';
+import ScheduleEditForm from '../components/ScheduleEditForm.jsx'; // New component for editing schedule
+import ManageSubjects from '../components/ManageSubjects.jsx'; // New component for managing subjects
+import Header from '../components/Navbars/LoggedInNavbar.jsx';
+import DashboardNavbar from '../components/Navbars/DashboardNavbar.jsx';
+import LoggedInNavbar from '../components/Navbars/LoggedInNavbar.jsx'
 
-import './Page.css';
+export default function TutorDashboardCalendar() {
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [newEventData, setNewEventData] = useState(null);
 
-// Function to parse the JWT token and return the decoded payload
-function parseJwt(token) {
-    try {
-        const base64url = token.split(".")[1];
-        const base64 = base64url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(
-            atob(base64)
-                .split('')
-                .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-                .join('')
-        );
-        return JSON.parse(jsonPayload);  // Return the decoded payload
-    } catch (error) {
-        console.error("Failed to parse JWT", error);
-        return null;
+  const token = localStorage.getItem("token");
+
+  // Fetch appointments for the tutor from the database
+  useEffect(() => {
+    fetch("http://localhost:4000/api/appointments/me", {
+      method: "GET",
+      headers: { "Authorization": `Bearer ${token}` },
+    })
+      .then((res) => res.json())  // Parse as JSON
+      .then((data) => {
+        console.log("Fetched tutor appointments:", data); // Log the fetched data
+        setEvents(data);  // Set the events state
+      })
+      .catch((error) => console.error("Unable to fetch appointments for tutor:", error));
+  }, [token]);
+
+  // Log the events state when it's updated
+  useEffect(() => {
+    console.log("Events state:", events);  // Log events state
+  }, [events]);
+
+  const handleSelectEvent = (eventInfo) => {
+    let eventData = eventInfo;
+    if (eventInfo.event) {
+      const ev = eventInfo.event;
+      eventData = {
+        id: ev.id,
+        title: ev.title,
+        start: ev.start,
+        end: ev.end,
+        extendedProps: { ...ev.extendedProps }
+      };
     }
-}
+    setSelectedEvent(eventData);
+  };
 
-function TutorDashboardHome() {
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const [currentTime, setCurrentTime] = useState('');
-    const [timeMessage, setTimeMessage] = useState('');
-    const [userInfo, setUserInfo] = useState(null);  // Store user data, including avatar
-    const [loading, setLoading] = useState(true); // Loading state to manage user data fetch
-
-    useEffect(() => {
-        // Get the token from localStorage
-        const token = localStorage.getItem('token');
-
-        if (token) {
-            // Decode the token and get the user information
-            const decodedToken = parseJwt(token);
-            if (decodedToken && decodedToken.email) {
-                // Fetch user data using the email from decoded token (e.g., from your backend)
-                fetchUserData(decodedToken.email);
-            } else {
-                console.error("Invalid or expired token.");
-            }
-        } else {
-            console.error("No token found.");
-        }
-
-        const intervalId = setInterval(() => {
-            const currentHour = new Date().getHours();
-            if (currentHour >= 5 && currentHour < 12) {
-                setCurrentTime("Good Morning, ");
-                setTimeMessage("Ready to inspire minds and guide students today?");
-            } else if (currentHour >= 12 && currentHour < 18) {
-                setCurrentTime("Good Afternoon, ");
-                setTimeMessage("A great time to check in and help students succeed!");
-            } else {
-                setCurrentTime("Good Evening, ");
-                setTimeMessage("Ready to wrap up and prepare for tomorrow?");
-            }
-            setCurrentDate(new Date());
-        }, 1000);
-
-        return () => clearInterval(intervalId);
-    }, []);
-
-    // Function to fetch user data
-    const fetchUserData = async (email) => {
-        try {
-            setLoading(true);  // Start loading
-            const response = await fetch(`http://localhost:4000/api/users/${email}`);  // Modify the URL as per your API route
-            if (response.ok) {
-                const data = await response.json();
-                setUserInfo(data);  // Store the user info, including avatar URL
-            } else {
-                console.error("Error fetching user data.");
-            }
-        } catch (error) {
-            console.error("Error fetching user data:", error);
-        } finally {
-            setLoading(false);  // Stop loading after fetch is complete
-        }
-    };
-
-    return (
-        <div className="tutor-dashboard-container">
-            <Navbar />
-            <TutorDashboardNavbar />
-            <div className="tutor-dashboard-content">
-                <div className="tutor-welcome-box">
-                    <div className="date">
-                        <p>{currentDate.toLocaleDateString()}</p>
-                    </div>
-                    <div className="name-message">
-                        <h1>{currentTime}{userInfo ? userInfo.firstName : 'Tutor'}</h1>
-                        <h4>{timeMessage}</h4>
-                    </div>
-                    <div className="user-picture">
-                        <img
-                            src={userInfo && userInfo.avatarURL ? userInfo.avatarURL : profilePic}
-                            alt="User Avatar"
-                            className="avatar-img"
-                        />
-                    </div>
-                </div>
-
-                {/* Typewriter Effect */}
-                <div className="typewriter-container">
-                    <p className="typwriter-text">What are we searching for this time?</p>
-                </div>
-
-                {/* Search Bar */}
-                <div className="search-bar-container">
-                    <input
-                        type="text"
-                        className="search-bar"
-                        placeholder="Search for students..."
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                console.log("Search submitted:", e.target.value);
-                                // Add your search logic here
-                            }
-                        }}
-                    />
-                </div>
-            </div>
-            <Footer />
-        </div>
+  const updateEvent = (eventId, newProps) => {
+    setEvents(prevEvents =>
+      prevEvents.map(ev =>
+        ev.id === eventId
+          ? { ...ev, ...newProps, extendedProps: { ...ev.extendedProps, ...newProps.extendedProps } }
+          : ev
+      )
     );
-}
+  };
 
-export default TutorDashboardHome;
+  const deleteEvent = async (eventId) => {
+    try {
+      // Send DELETE request to the backend
+      const response = await fetch(`http://localhost:4000/api/appointments/${eventId}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        alert('Appointment deleted successfully');
+        setEvents(prevEvents => prevEvents.filter(ev => ev.id !== eventId)); // Update state
+        setSelectedEvent(null); // Clear selected event
+      } else {
+        alert('Failed to delete appointment');
+      }
+    } catch (err) {
+      console.error('Error deleting appointment:', err);
+      alert('Error deleting appointment');
+    }
+  };
+
+  const handleDateSelect = (selectInfo) => {
+    setNewEventData({
+      title: '',
+      start: selectInfo.start,
+      end: selectInfo.end,
+      extendedProps: {
+        subject: '',
+        student: '',
+        feedbackSubmitted: false,
+        feedback: '',
+        joinUrl: '',
+        files: []
+      }
+    });
+    setShowCreateModal(true);
+  };
+
+  const handleOpenCreate = (ev = null) => {     
+    if (ev) {       
+      setNewEventData(ev);  // Populate data for the existing appointment
+    } else {       
+      const start = new Date();       
+      setNewEventData({         
+        title: '',         
+        start,         
+        end: new Date(start.getTime() + 60*60*1000),         
+        extendedProps: { feedbackSubmitted: false },       
+        _id: '', // Ensure you include the placeholder for _id in case of new appointment
+      });     
+    }     
+    setShowCreateModal(true);   
+  };
+  
+
+  const handleCreateAppointment = (appointmentData) => {
+    const newId = String(events.length + 1);
+    setEvents(prevEvents => [
+      ...prevEvents,
+      { id: newId, ...appointmentData }
+    ]);
+    setShowCreateModal(false);
+  };
+
+  return (
+    <div className="dashboard-page">
+      <LoggedInNavbar />
+      <DashboardNavbar />
+      <div className="dashboard-content">
+        <div className="header-section">
+          <h1>Your Calendar</h1>
+          <p>Manage your tutoring sessions and view upcoming appointments.</p>
+        </div>
+
+        <div className="main-content">
+          <CalendarSidebar events={events} onSelectEvent={handleSelectEvent} />
+          <div className="calendar-panel">
+            <FullCalendar
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+              initialView="timeGridWeek"
+              headerToolbar={{
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek'
+              }}
+              selectable={true}
+              select={handleDateSelect}
+              nowIndicator={true}
+              allDaySlot={false}
+              height="auto"
+              events={events}
+              eventClassNames={(info) => {
+                const { subject, feedbackSubmitted } = info.event.extendedProps;
+                const isPast = info.event.start < new Date();
+                let classes = [];
+                if (subject) classes.push(`event-${subject.toLowerCase()}`);
+                if (isPast) classes.push('past-event');
+                else classes.push('upcoming-event');
+                if (isPast && !feedbackSubmitted) classes.push('feedback-pending');
+                return classes;
+              }}
+              eventContent={(info) => {
+                const { feedbackSubmitted, subject } = info.event.extendedProps; // Extract subject and feedbackSubmitted
+                const isPast = info.event.start < new Date();
+                let statusIcon = null;
+                if (isPast) {
+                  statusIcon = feedbackSubmitted ? '✅' : '🕒';
+                }
+                return (
+                  <div style={{ display: 'flex', alignItems: 'center' }}> {/* Flexbox for inline items */}
+                    <b>{info.timeText}</b>
+                    <span style={{ marginLeft: 4 }}>{info.event.title}</span>
+                    {subject && <div style={{ marginLeft: 4 }}>{subject}</div>} {/* Add margin for spacing */}
+                    {statusIcon && <span style={{ marginLeft: 4 }}>{statusIcon}</span>}
+                  </div>
+                );
+              }}
+              eventClick={handleSelectEvent}
+            />
+          </div>
+        </div>
+      </div>
+
+      {selectedEvent && (
+        <EventDetailsModal
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+          onUpdateEvent={updateEvent}
+          onDeleteEvent={() => deleteEvent(selectedEvent.id)} // Delete event
+        />
+      )}
+
+      {showCreateModal && (
+        <AppointmentForm
+          initialData={newEventData}
+          onClose={() => setShowCreateModal(false)}
+          onSave={handleCreateAppointment}
+        />
+      )}
+    </div>
+  );
+}

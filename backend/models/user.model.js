@@ -1,9 +1,6 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
-  import mongoose from 'mongoose';
-
-  const userSchema = new mongoose.Schema(
     {
       firstName: {
         type: String,
@@ -43,12 +40,12 @@ const userSchema = new mongoose.Schema(
           // You can leave the roles array empty initially
         },
       ],
+      resetToken: String,
+      resetTokenExpiration: Date,
     },
     { timestamps: true } // Automatically adds createdAt and updatedAt fields
   );
   
-  const User = mongoose.model('User', userSchema);
-  export default User;
   
 
 const User = mongoose.model('User', userSchema);

@@ -1,18 +1,28 @@
 import React, { useLayoutEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import StudentDashboardHome from './pages/studentDashboard';
+import Home from './pages/homepage/home.jsx';
+import TutorHours from './pages/TutorHours';
+import AdminPayOverview from './pages/AdminPayOverview';
+import StudentDashboardHome from './pages/dashboard/Dashboard.jsx';
 import TutorDashboardHome from './pages/TutorDashboard';
-import SDH_yourTutors from './pages/SDH-yourTutors';
-import TDH_yourStudents from './pages/TDH-yourStudents';
+import StudentProfileView from './pages/StudentProfileView.jsx';
 import "./App.css";
 import Layout from './components/Layout';
-import NotesPage from './pages/NotesPage';
-import SearchTutorResults from './pages/Search-Tutor-Results';
-import SearchStudentResults from './pages/Search-Student-Results';
+import NotesPage from './pages/NotesPage/NotesPage.jsx';
+import SearchResults from './pages/SearchResults/SearchResults.jsx';
+import SearchStudentResults from './pages/SearchResults/Search-Student-Results';
+import AdminSearchTutorResults from './pages/Admin-Search-Tutor-Results';
+import AdminSearchStudentResults from './pages/SearchResults/Search-Student-Results';
+import AccountSettings from './pages/AccountSettings/AccountSettings.jsx'; // Import the new AccountSettings component
 import PrivateRoute from "./context/PrivateRoutes.jsx"
-import StudentDashboardCalendar from './pages/StudentDashboardCalendar.jsx';
-import Feedback from './components/Feedback.jsx';
+import StudentDashboardCalendar from './pages/calendar/DashboardCalendar.jsx';
+import AdminDashboardHome from './pages/AdminDashboard.jsx';
+import TutorProfileView from './pages/TutorProfileView.jsx';
+import ResetPassword from './pages/ResetPassword';
+import TutorPayrollPage from './pages/TutorPayrollPage.jsx';
+
+
+
 
 function App() {
   return (
@@ -22,10 +32,15 @@ function App() {
       <Route element = {<PrivateRoute/>}>
         <Route path="/student-dashboard" element={<StudentDashboardHome />} />
         <Route path="/student-dashboard/calendar" element={<StudentDashboardCalendar/>}/>
-        <Route path="/studentdashboard/yourutors" element={<SDH_yourTutors />} />
-        <Route path="/studentdashboard/search-results" element={<SearchTutorResults />} />
-        <Route path="/feedback" element={<Feedback />} />
+        <Route path="/studentdashboard/search-results" element={<SearchResults />} />
+        <Route path="/admin-dashboard" element={<AdminDashboardHome/>}/>
+        <Route path="/admin-dashboard/tutors" element={<TutorProfileView />} />
+        <Route path="/tutor-dashboard/payroll" element={<TutorPayrollPage />} />
+        <Route path="/tutor-dashboard" element={<TutorDashboardHome />} />
+        <Route path="/tutor-dashboard/students" element={<StudentProfileView />} />
+        <Route path="/student-dashboard/notes" element={<NotesPage/>} />
       </Route>
+      <Route path="/reset-password" element={<ResetPassword/>}/>
     </Routes>
   );
 }

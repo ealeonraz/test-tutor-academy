@@ -12,6 +12,16 @@
     box-sizing: border-box;
 }
 
+.close-button{
+    background-color: var(--secondary);
+    color: white;
+    border: 2px solid black;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
 .dashboard-nav-main {
     padding-top: 0.5em;
     height: 4em;
@@ -37,6 +47,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     cursor: pointer;
 
     font-weight: bold;
@@ -79,6 +90,7 @@
     flex-direction: row;
     background-color: var(--secondary);
     height: 100%;
+    width: 80%;
     flex-wrap: wrap;
     justify-content: center;
     /* Center the buttons horizontally */
@@ -95,7 +107,7 @@ html {
 
 /* Main Navbar */
 .logged-in-main-navbar {
-    height: 4em;
+    height: 80px;
     background-color: white;
     position: relative;
     display: flex;
@@ -186,90 +198,6 @@ html {
     /* Optional: Add a border for better visibility */
 }
 
-.notification-dropdown {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 4em;
-    right: -1%;
-    width: 20em;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 1em;
-    gap: 0.75em;
-    z-index: 10;
-    /* Ensure it stays above other elements */
-}
-
-.notification-badge {
-    color: var(--secondary);
-}
-
-.notification-icon svg{
-    color: var(--secondary);
-}
-
-.notification-list{
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-}
-
-.notification-item{
-    display: flex;
-    flex-direction: column;
-}
-
-.notification-header {
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    min-height: 36px;
-}
-
-.notification-header-title {
-    display: block;
-    font-size: 20px;
-    line-height: 36px;
-}
-
-
-.notification-mark-read {
-    background-color: var(--secondary); /* Use your primary color */
-    color: white;
-    border: none;
-    margin-top: 0.5em;
-    padding: 0.5em 1em;
-    border: 2px solid black;
-    border-radius: 5px; 
-    cursor: pointer;
-    font-size: 12px;
-    transition: background-color 0.3s ease;
-}
-
-.notification-mark-read:hover {
-    background-color: black;
-    color: white;
-}
-
-.notification-mark-read-all {
-    background-color: var(--secondary); /* Use your primary color */
-    color: white;
-    border: none;
-    padding: 0.5em 1em;
-    border: 2px solid black;
-    border-radius: 5px; 
-    cursor: pointer;
-    font-size: 12px;
-    transition: background-color 0.3s ease;
-    align-self: center;
-}
-
-.notification-mark-read:hover {
-    background-color: black;
-    color: white;
-}
 
 /* Search Bar Container */
 .search-bar-container {
@@ -312,77 +240,6 @@ html {
     background-color: var(--secondary); /* Use your secondary color for hover */
 }
 
-/* Popup Button */
-.popup-button {
-    background-color: var(--primary);
-    /* Use your primary color */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: left;
-    /* Align text to the left */
-    width: 100%;
-    /* Make the button take the full width of the popup */
-    font-size: 14px;
-    position: relative;
-    /* Required for the ::before pseudo-element */
-    overflow: hidden;
-    /* Ensure the gradient stays within the button */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.popup-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 10px var(--secondary);
-}
-
-/* Gradient Animation for Hover */
-.popup-button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    /* Start the gradient off-screen */
-    width: 200%;
-    /* Make the gradient wide enough to cover the button */
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(111, 0, 255, 0.6), transparent);
-    opacity: 0;
-    transition: left 0.5s ease;
-    /* Smooth transition for the gradient */
-}
-
-.popup-button:hover::before {
-    left: 0;
-    /* Move the gradient into view */
-}
-
-/* Optional: Style the popup content */
-.popup-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* This is the name/text of the popup buttons */
-.popup-content button {
-    background-color: var(--primary);
-    color: black;
-    border-style: groove;
-    border-color: var(--secondary);
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.popup-content button:hover {
-    background-color: var(--secondary);
-    color: white;
-}
-
 /* Logo */
 .logo {
     display: flex;
@@ -391,6 +248,21 @@ html {
     cursor: pointer;
     padding-left: 10px;
     /* Adjust padding for spacing */
+    flex: 0 0 auto;
+    /* Prevent the logo from taking too much space */
+}
+
+.logo-small img{
+    display: flex;
+    align-items: center;
+    height: 7vh;
+    width: auto;
+    object-fit: contain;
+    cursor: pointer;
+    padding-left: 10px;
+    /* Adjust padding for spacing */
+    margin: 0 1.5rem;
+    padding: 0.2rem 0;
     flex: 0 0 auto;
     /* Prevent the logo from taking too much space */
 }
@@ -414,9 +286,8 @@ html {
     width: 60em;
     height: 50em;
     border: 15px solid var(--secondary);
-    padding-left: 4em;
     
-    margin: 0.5em;
+    margin: 0em;
     border-radius: 5px;
 
     /* Inside box */
@@ -426,8 +297,8 @@ html {
 }
 
 .students-card {
-    width: 12em;
-    height: 14em;
+    width: 1em;
+    height: 1em;
     background-color: blue;
 }
 
@@ -457,10 +328,10 @@ html {
 
 /* Responsiveness */
 @media (max-width: 768px) {
-    .logged-in-main-navbar {
+    .LoggedInNavbar {
         flex-direction: row;
         /* Keep elements in a row on smaller screens */
-        height: auto;
+        height: 80px;
         /* Allow height to adjust dynamically */
         padding: 10px;
         /* Add padding for smaller screens */
