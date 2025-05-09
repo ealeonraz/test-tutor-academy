@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 import NotesPage from './pages/NotesPage/NotesPage.jsx';
 import SearchResults from './pages/SearchResults/SearchResults.jsx';
 import PrivateRoute from "./context/PrivateRoutes.jsx"
-import StudentDashboardCalendar from './pages/calendar/DashboardCalendar.jsx';
+import StudentDashboardCalendar from './pages/Calendar/DashboardCalendar.jsx';
 import AdminDashboardHome from './pages/AdminDashboard.jsx';
 import TutorProfileView from './pages/TutorProfileView.jsx';
 import ResetPassword from './pages/ResetPassword';
