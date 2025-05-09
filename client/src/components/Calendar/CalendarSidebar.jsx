@@ -5,7 +5,7 @@ import Feedback from '../Feedback/Feedback.jsx';
 import DeleteConfirmationModal from '../DeleteConfirmationModal.jsx'; // Import the confirmation modal
 import EditAppointmentForm from '../EditAppointmentForm.jsx'; // Import the Edit Appointment form
 import './CalendarSidebar.css';
-import './calendar.css';
+import './Calendar.css';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
 
