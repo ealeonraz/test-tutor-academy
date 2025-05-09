@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Homepage/Home.jsx';
+import Home from './pages/HomePage/Home.jsx';
 import StudentDashboardHome from './pages/dashboard/Dashboard.jsx';
 import TutorDashboardHome from './pages/TutorDashboard';
 import StudentProfileView from './pages/StudentProfileView.jsx';
