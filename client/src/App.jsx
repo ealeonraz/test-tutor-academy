@@ -1,8 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/homepage/home.jsx';
-import TutorHours from './pages/TutorHours';
-import AdminPayOverview from './pages/AdminPayOverview';
+import Home from './pages/Homepage/Home.jsx';
 import StudentDashboardHome from './pages/dashboard/Dashboard.jsx';
 import TutorDashboardHome from './pages/TutorDashboard';
 import StudentProfileView from './pages/StudentProfileView.jsx';
@@ -10,10 +8,6 @@ import "./App.css";
 import Layout from './components/Layout';
 import NotesPage from './pages/NotesPage/NotesPage.jsx';
 import SearchResults from './pages/SearchResults/SearchResults.jsx';
-import SearchStudentResults from './pages/SearchResults/Search-Student-Results';
-import AdminSearchTutorResults from './pages/Admin-Search-Tutor-Results';
-import AdminSearchStudentResults from './pages/SearchResults/Search-Student-Results';
-import AccountSettings from './pages/AccountSettings/AccountSettings.jsx'; // Import the new AccountSettings component
 import PrivateRoute from "./context/PrivateRoutes.jsx"
 import StudentDashboardCalendar from './pages/calendar/DashboardCalendar.jsx';
 import AdminDashboardHome from './pages/AdminDashboard.jsx';
