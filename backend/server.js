@@ -18,14 +18,27 @@ import searchRoutes from "./routes/searchRoutes.js";  // Search routes
 const app = express();
 const PORT = 4000;
 
-const corsOptions = {
-  origin: 'http://localhost:5173',  // Update to match the frontend port
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,  // Allow cookies and credentials (important for handling token with requests)
-};
+const allowedOrigins = [
+  "http://localhost:5173",      // your Vite dev server
+  "https://gotutor.academy"     // your live frontend
+]
 
-app.use(cors(corsOptions));  // Use CORS with the updated options
+const corsOptions = {
+  origin(origin, callback) {
+    // allow requests like curl or mobile apps with no origin
+    if (!origin) return callback(null, true)
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true)
+    }
+    callback(new Error(`CORS policy: origin ${origin} not allowed`))
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}
+
+app.use(cors(corsOptions))
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

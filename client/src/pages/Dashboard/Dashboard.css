@@ -1,4 +1,4 @@
-.Dashboard-container{
+.dashboard-container{
     --primary:   #D0BCFF;
     --secondary: #925FE2;
   }
@@ -16,7 +16,7 @@
   }
   
   /* Student Dashboard Container */
-  .Dashboard-container {
+  .dashboard-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -24,7 +24,7 @@
   }
   
   /* Student Dashboard Content */
-  .Dashboard-content {
+  .dashboard-content {
     align-items: center;
     background-color: var(--primary);
     display: flex;
