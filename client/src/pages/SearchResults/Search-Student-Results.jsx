@@ -4,6 +4,7 @@ import TutorDashboardNavbar from '../../components/TutorDashboardNavbar';
 import Navbar from '../../components/Navbars/LoggedInNavbar';
 
 import '../Page.css';
+import { listStudents } from '../../api/students';
 
 export default function TDH_yourStudents() {
     const [students, setStudents] = useState([])
@@ -11,8 +12,8 @@ export default function TDH_yourStudents() {
     useEffect(() => {
         async function fetchStudents() {
             try {
-                const response = await fetch('/api/students');
-                const data = await response.json();
+                const data = await listStudents();
+                setStudents(data);
             } catch (error) {
                 console.error('Error fetching the students:', error);
             }

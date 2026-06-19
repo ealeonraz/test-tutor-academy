@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './EditSchedule.css';
+import { getTutorInfo, updateTutorAvailableHours } from '../api/tutors';
 
 const EditScheduleForm = ({ tutorId, initialData, onClose }) => {
   const [formData, setFormData] = useState({
@@ -14,19 +15,7 @@ const EditScheduleForm = ({ tutorId, initialData, onClose }) => {
   useEffect(() => {
     const fetchTutorAvailability = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/tutors/${tutorId}/info`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch tutor availability');
-        }
-
-        const data = await response.json();
-        console.log("TUTOR DATA", data);
+        const data = await getTutorInfo(tutorId);
 
         // Set tutor's available hours
         if (data && data.availableHours) {
@@ -63,32 +52,12 @@ const EditScheduleForm = ({ tutorId, initialData, onClose }) => {
     }));
   };
 
-  // Handle Save Logic for Updating Appointment
+  // Handle Save Logic for Updating the tutor's available hours
   const handleSaveAppointment = async () => {
-    const updatedAppointment = {
-      id: initialData.id,
-      title: formData.title,
-      start: formData.start,
-      end: formData.end,
-    };
-
-    // Send the updated appointment data to the backend
     try {
-      const response = await fetch(`http://localhost:4000/api/tutors/:id/availableHours`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(tutorInfo), // Send the updated tutor info and available hours
-      });
-
-      if (response.ok) {
-        alert('Schedule updated successfully!');
-        onClose(); // Close the modal after saving
-      } else {
-        alert('Failed to update schedule');
-      }
+      await updateTutorAvailableHours(tutorId, availableHours);
+      alert('Schedule updated successfully!');
+      onClose(); // Close the modal after saving
     } catch (err) {
       console.error('Error updating schedule:', err);
       alert('Error updating schedule');

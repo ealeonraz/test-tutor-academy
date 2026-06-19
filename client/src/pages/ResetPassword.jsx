@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { updatePassword } from "../api/auth";
 import "../components/Overlay/Overlay.css";
 import "./Page.css"
 import Navbar from "../components/Navbars/Navbar";
@@ -8,8 +8,6 @@ import Footer from "../components/Footer";
 //comment
 const PasswordResetOverlay = ({ onClose }) => {
   const dialogRef = useRef(null);
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get("token");
 
   const [formData, setFormData] = useState({
     password: "",
@@ -50,14 +48,7 @@ const PasswordResetOverlay = ({ onClose }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:4000/api/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, newPassword: formData.password }),
-      });
-
-      if (!response.ok) throw new Error("Reset failed");
-      await response.json();
+      await updatePassword(formData.password);
       setSuccess(true);
     } catch (error) {
       setErrorMessage("Password reset failed. The link may have expired.");

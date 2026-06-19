@@ -9,6 +9,7 @@ import { TextField, InputAdornment, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 import './Dashboard.css';
+import { getMyProfile } from '../../api/auth';
 
 function DashboardHome() {
     const [userInfo, setUserInfo] = useState(null);
@@ -45,25 +46,7 @@ function DashboardHome() {
         // Fetch user info
         const fetchUserInfo = async () => {
             try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    setLoading(false);
-                    return;
-                }
-
-                const response = await fetch('http://localhost:4000/api/user/me', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user info');
-                }
-
-                const data = await response.json();
+                const data = await getMyProfile();
                 setUserInfo(data);
             } catch (err) {
                 console.error('Error fetching user info:', err);

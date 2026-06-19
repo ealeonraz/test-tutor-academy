@@ -12,6 +12,8 @@ import defaultProfilePic from '../../assets/gohan-pic.webp'; // Default profile 
 import LoggedInMainNav from '../../components/Navbars/LoggedInNavbar';
 import NavBar from '../../components/Navbars/Navbar';
 import Footer from '../../components/Footer';
+import { listSubjectNames } from '../../api/subjects';
+import { searchTutors } from '../../api/search';
 
 function SearchResults() {
   const [results, setResults] = useState([]);
@@ -27,15 +29,13 @@ function SearchResults() {
 
   const query = new URLSearchParams(location.search).get('q');
   const token = localStorage.getItem('token');
-  const BASE_URL = import.meta.env.VITE_API_BASE;
 
   const [searchTerm, setSearchTerm] = useState(query || '');
 
   useEffect(() => {
     const loadSubjects = async () => {
       try {
-        const res = await fetch(`http://localhost:4000/api/search/subjects`);
-        const data = await res.json();
+        const data = await listSubjectNames();
         setAllSubjects(data);
       } catch (err) {
         console.error("Failed to load subject list:", err);
@@ -48,23 +48,11 @@ function SearchResults() {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const params = new URLSearchParams();
-        if (searchTerm.trim()) params.append('q', searchTerm.trim());
-        selectedSubjects.forEach((s) => params.append('subjects', s));
-        selectedRatings.forEach((r) => params.append('ratings', r));
-        selectedDays.forEach((a) => params.append('availability', a));
-
-        const res = await fetch(`http://localhost:4000/api/search?${params.toString()}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+        const data = await searchTutors({
+          q: searchTerm,
+          subjects: selectedSubjects,
+          availability: selectedDays,
         });
-
-        if (!res.ok) {
-          throw new Error(`Request failed: ${res.status}`);
-        }
-
-        const data = await res.json();
         setResults(data);
       } catch (err) {
         console.error("Error fetching search results:", err);
@@ -74,7 +62,7 @@ function SearchResults() {
     };
 
     fetchResults();
-  }, [searchTerm, selectedSubjects, selectedRatings, selectedDays, token]);
+  }, [searchTerm, selectedSubjects, selectedRatings, selectedDays]);
 
   const handleCheckboxToggle = (value, setState) => {
     setState((prev) => prev.includes(value) ? prev.filter((s) => s !== value) : [...prev, value]);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import StudentDashboardNavbar from '../components/Navbars/DashboardNavbar';
 import Header from '../components/Navbars/LoggedInNavbar';
 import './TutorProfileView.css';
+import { listStudents, deleteStudent } from '../api/students';
 
 const StudentProfileView = () => {
   const [students, setStudents] = useState([]);
@@ -13,17 +14,7 @@ const StudentProfileView = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:4000/api/students', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!res.ok) throw new Error('Failed to fetch students');
-
-        const data = await res.json();
+        const data = await listStudents();
         setStudents(data);
       } catch (err) {
         setError(err.message);
@@ -37,16 +28,7 @@ const StudentProfileView = () => {
   // Delete a student by ID and update the local state
   const handleDeleteStudent = async (studentId) => {
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:4000/api/students/${studentId}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
-
-      if (!res.ok) throw new Error("Failed to delete student");
-
+      await deleteStudent(studentId);
       setStudents(prev => prev.filter(s => s._id !== studentId));
       setSelectedStudent(null);
       setShowConfirm(false);

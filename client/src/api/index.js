@@ -1,0 +1,12 @@
+export * as auth from './auth';
+export * as profiles from './profiles';
+export * as tutors from './tutors';
+export * as students from './students';
+export * as appointments from './appointments';
+export * as subjects from './subjects';
+export * as notes from './notes';
+export * as feedback from './feedback';
+export * as reviews from './reviews';
+export * as search from './search';
+export * as events from './events';
+export { supabase } from '../lib/supabase';

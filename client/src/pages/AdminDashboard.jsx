@@ -5,6 +5,10 @@ import Footer from '../components/Footer';
 import { Pencil } from 'lucide-react';  // Import the Lucide Pencil icon
 import { Users, UserPlus, Calendar } from 'lucide-react';  // Importing correct icons
 import './AdminDashboard.css';
+import { listTutors } from '../api/tutors';
+import { listStudents } from '../api/students';
+import { getThisMonth, getUpcoming } from '../api/events';
+import { listSubjects, createSubject, updateSubject, deleteSubject } from '../api/subjects';
 
 function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -18,92 +22,29 @@ function AdminDashboard() {
   const [newSubject, setNewSubject] = useState('');
   const [editingSubject, setEditingSubject] = useState(null); // Track the subject being edited
 
-  const token = localStorage.getItem("token");
-
   useEffect(() => {
-    const fetchTutorsInfo = async () => {
+    const loadDashboard = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/tutors', {
-          method: "GET",
-          headers: { "Authorization": `Bearer ${token}` },
+        const [tutors, students, thisMonth, upcoming, subjectList] = await Promise.all([
+          listTutors(),
+          listStudents(),
+          getThisMonth(),
+          getUpcoming(),
+          listSubjects(),
+        ]);
+        setStats({
+          totalTutors: tutors.length,
+          totalStudents: students.length,
+          appointmentsThisMonth: thisMonth.length,
         });
-        if (!response.ok) throw new Error('Failed to fetch tutors info');
-        const data = await response.json();
-        setStats(prev => ({ ...prev, totalTutors: data.length }));
+        setUpcomingAppointments(upcoming);
+        setSubjects(subjectList);
       } catch (error) {
-        console.error("Error fetching tutors info:", error);
+        console.error("Error loading admin dashboard:", error);
       }
     };
-    fetchTutorsInfo();
-  }, [token]);
-
-  useEffect(() => {
-    const fetchStudentsInfo = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/api/students', {
-          method: "GET",
-          headers: { "Authorization": `Bearer ${token}` },
-        });
-        if (!response.ok) throw new Error('Failed to fetch students info');
-        const data = await response.json();
-        setStats(prev => ({ ...prev, totalStudents: data.length }));
-      } catch (error) {
-        console.error("Error fetching students info:", error);
-      }
-    };
-    fetchStudentsInfo();
-  }, [token]);
-
-  useEffect(() => {
-    const fetchAppointmentsThisMonth = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/api/events/this-month', {
-          method: "GET",
-          headers: { "Authorization": `Bearer ${token}` },
-        });
-        if (!response.ok) throw new Error('Failed to fetch appointments this month');
-        const data = await response.json();
-        setStats(prev => ({ ...prev, appointmentsThisMonth: data.length }));
-      } catch (error) {
-        console.error("Error fetching appointments this month:", error);
-      }
-    };
-    fetchAppointmentsThisMonth();
-  }, [token]);
-
-  useEffect(() => {
-    const fetchUpcomingAppointments = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/api/events/upcoming', {
-          method: "GET",
-          headers: { "Authorization": `Bearer ${token}` },
-        });
-        if (!response.ok) throw new Error('Failed to fetch upcoming appointments');
-        const data = await response.json();
-        setUpcomingAppointments(data);
-      } catch (error) {
-        console.error("Error fetching upcoming appointments:", error);
-      }
-    };
-    fetchUpcomingAppointments();
-  }, [token]);
-
-  useEffect(() => {
-    const fetchSubjects = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/api/subjects', {
-          method: 'GET',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (!response.ok) throw new Error('Failed to fetch subjects');
-        const data = await response.json();
-        setSubjects(data);
-      } catch (error) {
-        console.error("Error fetching subjects:", error);
-      }
-    };
-    fetchSubjects();
-  }, [token]);
+    loadDashboard();
+  }, []);
 
   const handleOverlayToggle = () => {
     setOverlayVisible(!isOverlayVisible); // Toggle overlay visibility
@@ -114,13 +55,7 @@ function AdminDashboard() {
     e.preventDefault();
     if (!newSubject) return;
     try {
-      const response = await fetch('http://localhost:4000/api/subjects', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ name: newSubject }),
-      });
-      if (!response.ok) throw new Error('Failed to add subject');
-      const subject = await response.json();
+      const subject = await createSubject(newSubject);
       setSubjects(prev => [...prev, subject]);
       setNewSubject('');
     } catch (error) {
@@ -130,11 +65,7 @@ function AdminDashboard() {
 
   const handleDelete = async (subjectId) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/subjects/${subjectId}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      if (!response.ok) throw new Error('Failed to delete subject');
+      await deleteSubject(subjectId);
       setSubjects(subjects.filter(subject => subject.id !== subjectId));
     } catch (error) {
       console.error("Error deleting subject:", error);
@@ -151,13 +82,7 @@ function AdminDashboard() {
     e.preventDefault();
     if (!newSubject || !editingSubject) return;
     try {
-      const response = await fetch(`http://localhost:4000/api/subjects/${editingSubject.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ name: newSubject }),
-      });
-      if (!response.ok) throw new Error('Failed to update subject');
-      const updatedSubject = await response.json();
+      const updatedSubject = await updateSubject(editingSubject.id, newSubject);
       setSubjects(prev =>
         prev.map(subject =>
           subject.id === updatedSubject.id ? updatedSubject : subject

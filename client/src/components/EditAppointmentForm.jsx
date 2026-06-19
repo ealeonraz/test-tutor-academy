@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './EditAppointmentForm.css';
+import { getTutorInfo } from '../api/tutors';
 
 // Function to format dates into a readable format
 const formatDate = (dateString) => {
@@ -25,7 +26,7 @@ const EditAppointmentForm = ({ initialData, onClose, onSave }) => {
   const [selectedSlot, setSelectedSlot] = useState(initialData.start || "");  // Set initial start time if available
   const [selectedEndTime, setSelectedEndTime] = useState(initialData.end || "");
   const [tutors, setTutorInfo] = useState([]); // To store the tutors data
-  const tutorId = initialData.tutor;  // Tutor ID from the initial data
+  const tutorId = initialData.tutorId || initialData.tutor;  // Tutor ID from the initial data
 
   useEffect(() => {
     if (initialData) {
@@ -42,15 +43,9 @@ const EditAppointmentForm = ({ initialData, onClose, onSave }) => {
   useEffect(() => {
     const fetchTutorInfo = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/api/tutors/${tutorId}/info`, {
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        const data = await response.json();
-        console.log("Fetched Tutor Info ZEKEY :", data);
+        const data = await getTutorInfo(tutorId);
         setTutorInfo(data);  // Store the fetched data
-        setAvailableSlots(data.availableSlots); // Set the available slots for the tutor
+        setAvailableSlots(data.availableSlots || []); // Set the available slots for the tutor
       } catch (err) {
         console.error("Error fetching tutor info:", err);
       }

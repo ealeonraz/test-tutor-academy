@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { signUp } from "../../api/auth";
 import "./Overlay.css";
 
 const RegisterOverlayButton = () => {
@@ -63,25 +64,18 @@ const RegisterOverlayButton = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:4000/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(registerData),
+      await signUp({
+        first: registerData.first,
+        last: registerData.last,
+        email: registerData.email,
+        password: registerData.password,
+        role: registerData.role,
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to create account.");
-      }
-
-      const result = await response.json();
-
       closeDialog();
-
     } catch (error) {
       console.error("Failed to create account:", error);
-      setErrorMessage("Account creation failed. Please try again.");
+      setErrorMessage(error.message || "Account creation failed. Please try again.");
     }
   };
 
@@ -126,6 +120,19 @@ const RegisterOverlayButton = () => {
                 onChange={updateForm}
                 required
               />
+
+              <label htmlFor="role">I am a:</label>
+              <select
+                id="role"
+                name="role"
+                value={registerData.role}
+                onChange={updateForm}
+                required
+              >
+                <option value="student">Student</option>
+                <option value="tutor">Tutor</option>
+                <option value="admin">Admin</option>
+              </select>
 
               <label htmlFor="email">Email:</label>
               <input

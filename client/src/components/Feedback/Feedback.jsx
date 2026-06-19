@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Feedback.css";
 import { useAuth } from '../../context/AuthContext.jsx';
+import { submitFeedback } from '../../api/feedback';
 
   
 
@@ -54,20 +55,10 @@ import { useAuth } from '../../context/AuthContext.jsx';
   const handleNext = () => currentStep < totalSteps && setCurrentStep(s => s + 1);
   const handleBack = () => currentStep > 1 && setCurrentStep(s => s - 1);
 
-  const token = localStorage.getItem("token");
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:4000/api/feedback", {
-        method: "POST",
-        headers: { 
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json" 
-        },
-        body: JSON.stringify(formData)
-      });
-      if (!res.ok) throw new Error();
-      await res.json();
+      await submitFeedback(formData);
       setSubmitted(true);
     } catch (err) {
       console.error(err);

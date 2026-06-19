@@ -10,6 +10,7 @@ import LoggedInNavbar from "../../components/Navbars/LoggedInNavbar.jsx"
 import '../Calendar/DashboardCalendar.css';
 import DashboardNavbar from '../../components/Navbars/DashboardNavbar.jsx';
 import Header from '../../components/Navbars/LoggedInNavbar.jsx';
+import { getMyAppointments, deleteAppointment } from '../../api/appointments';
 
 export default function StudentDashboardCalendar() {
   const [events, setEvents] = useState([]);
@@ -17,19 +18,10 @@ export default function StudentDashboardCalendar() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newEventData, setNewEventData] = useState(null);
 
-  const token = localStorage.getItem("token");
-
   // Fetch appointments from the database
   useEffect(() => {
-    fetch("http://localhost:4000/api/appointments", {
-      method: "GET",
-      headers: { "Authorization": `Bearer ${token}` },
-    })
-      .then((res) => res.json())  // Parse as JSON
-      .then((data) => {
-        console.log("Fetched data:", data); // Log the full data returned from the API
-        setEvents(data);  // Set the events state
-      })
+    getMyAppointments()
+      .then((data) => setEvents(data))
       .catch((error) => console.error("Unable to fetch appointments:", error));
   }, []);
 
@@ -65,22 +57,10 @@ export default function StudentDashboardCalendar() {
 
   const deleteEvent = async (eventId) => {
     try {
-      // Send DELETE request to the backend
-      const response = await fetch(`http://localhost:4000/api/appointments/${eventId}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        alert('Appointment deleted successfully');
-        setEvents(prevEvents => prevEvents.filter(ev => ev.id !== eventId)); // Update state
-        setSelectedEvent(null); // Clear selected event
-      } else {
-        alert('Failed to delete appointment');
-      }
+      await deleteAppointment(eventId);
+      alert('Appointment deleted successfully');
+      setEvents(prevEvents => prevEvents.filter(ev => ev.id !== eventId)); // Update state
+      setSelectedEvent(null); // Clear selected event
     } catch (err) {
       console.error('Error deleting appointment:', err);
       alert('Error deleting appointment');

@@ -8,6 +8,7 @@ import Navbar from "../../components/Navbars/LoggedInNavbar"
 import DashboardNavbar from "../../components/Navbars/DashboardNavbar"
 import Footer from "../../components/Footer"
 import "../Page.css"
+import { listNotes } from "../../api/notes"
 
 const NotesPage = () => {
   const [notes, setNotes] = useState([])
@@ -35,18 +36,7 @@ const NotesPage = () => {
 
   const fetchNotes = async () => {
     try {
-      const params = new URLSearchParams()
-      if (search)      params.append("search", search)
-      if (date)        params.append("date", date)
-      if (subject)     params.append("subject", subject)
-      if (studentName) params.append("studentName", studentName)
-
-      const response = await fetch(
-        `http://localhost:4000/api/tutor-notes?${params.toString()}`
-      )
-      if (!response.ok) throw new Error(response.statusText)
-
-      const data = await response.json()
+      const data = await listNotes({ search, date, subject, studentName })
       setNotes(data)
     } catch (error) {
       console.error("Error fetching notes", error)

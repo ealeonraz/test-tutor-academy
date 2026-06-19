@@ -1,16 +1,15 @@
 import React, { useEffect, useState} from 'react';
-function ReviewSection(){  
+import { listReviews } from '../api/reviews';
+function ReviewSection(){
     const [review, setReview] = useState([]);
 
 
 
-    useEffect(()=>{           
-
-        fetch("http://localhost:4000/api/reviews")
-        .then((res)=>res.json())
+    useEffect(()=>{
+        listReviews()
         .then((reviews)=>setReview(reviews))
         .catch((error)=>console.error("Unable to fetch reviews:",error));
-    },[]);  
+    },[]);
     return (
         <section id="testimonials-section" className="testimonials-container">
         <h2>See What Others Have To Say</h2>

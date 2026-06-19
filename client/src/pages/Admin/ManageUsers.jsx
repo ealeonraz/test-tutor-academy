@@ -3,6 +3,7 @@ import {
   Box, Checkbox, FormControlLabel, FormGroup,
   TextField, Grid, Card, CardContent, Typography, Button
 } from '@mui/material';
+import { listAll, deleteProfile } from '../../api/profiles';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -11,12 +12,7 @@ const ManageUsers = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    fetch('/api/users', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-      .then(res => res.json())
+    listAll()
       .then(data => {
         setUsers(data);
         setDisplayedUsers(data); // initially show all
@@ -27,10 +23,10 @@ const ManageUsers = () => {
   // Filtering logic
   useEffect(() => {
     let filtered = users.filter(user => {
-      const hasRole = user.roles.some(r => filters[r.role]);
+      const hasRole = filters[user.role];
       const nameMatch =
-        user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.lastName.toLowerCase().includes(searchQuery.toLowerCase());
+        (user.firstName || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (user.lastName || '').toLowerCase().includes(searchQuery.toLowerCase());
       return hasRole && nameMatch;
     });
     setDisplayedUsers(filtered);
@@ -44,14 +40,10 @@ const ManageUsers = () => {
     const confirmed = window.confirm("Are you sure you want to delete this user?");
     if (!confirmed) return;
 
-    const res = await fetch(`/api/users/${userId}`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    });
-
-    if (res.ok) {
+    try {
+      await deleteProfile(userId);
       setUsers(users.filter(u => u._id !== userId));
-    } else {
+    } catch {
       alert("Failed to delete user.");
     }
   };
@@ -85,7 +77,7 @@ const ManageUsers = () => {
               <CardContent>
                 <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
                 <Typography>Email: {user.email}</Typography>
-                <Typography>Role: {user.roles.map(r => r.role).join(', ')}</Typography>
+                <Typography>Role: {user.role}</Typography>
                 <Box sx={{ mt: 2 }}>
                   <Button variant="outlined" color="primary" sx={{ mr: 1 }}>
                     Edit

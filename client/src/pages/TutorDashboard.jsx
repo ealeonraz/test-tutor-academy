@@ -7,9 +7,11 @@ import CalendarSidebar from '../components/TutorCalendarSidebar.jsx';
 import EventDetailsModal from '../components/Modals/EventDetailsModal.jsx';
 import ScheduleEditForm from '../components/ScheduleEditForm.jsx'; // New component for editing schedule
 import ManageSubjects from '../components/ManageSubjects.jsx'; // New component for managing subjects
+import AppointmentForm from '../components/Modals/CreateAppointmentModal.jsx';
 import Header from '../components/Navbars/LoggedInNavbar.jsx';
 import DashboardNavbar from '../components/Navbars/DashboardNavbar.jsx';
 import LoggedInNavbar from '../components/Navbars/LoggedInNavbar.jsx'
+import { getAppointmentsForMe, deleteAppointment } from '../api/appointments';
 
 export default function TutorDashboardCalendar() {
   const [events, setEvents] = useState([]);
@@ -17,21 +19,12 @@ export default function TutorDashboardCalendar() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newEventData, setNewEventData] = useState(null);
 
-  const token = localStorage.getItem("token");
-
   // Fetch appointments for the tutor from the database
   useEffect(() => {
-    fetch("http://localhost:4000/api/appointments/me", {
-      method: "GET",
-      headers: { "Authorization": `Bearer ${token}` },
-    })
-      .then((res) => res.json())  // Parse as JSON
-      .then((data) => {
-        console.log("Fetched tutor appointments:", data); // Log the fetched data
-        setEvents(data);  // Set the events state
-      })
+    getAppointmentsForMe()
+      .then((data) => setEvents(data))
       .catch((error) => console.error("Unable to fetch appointments for tutor:", error));
-  }, [token]);
+  }, []);
 
   // Log the events state when it's updated
   useEffect(() => {
@@ -65,22 +58,10 @@ export default function TutorDashboardCalendar() {
 
   const deleteEvent = async (eventId) => {
     try {
-      // Send DELETE request to the backend
-      const response = await fetch(`http://localhost:4000/api/appointments/${eventId}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        alert('Appointment deleted successfully');
-        setEvents(prevEvents => prevEvents.filter(ev => ev.id !== eventId)); // Update state
-        setSelectedEvent(null); // Clear selected event
-      } else {
-        alert('Failed to delete appointment');
-      }
+      await deleteAppointment(eventId);
+      alert('Appointment deleted successfully');
+      setEvents(prevEvents => prevEvents.filter(ev => ev.id !== eventId)); // Update state
+      setSelectedEvent(null); // Clear selected event
     } catch (err) {
       console.error('Error deleting appointment:', err);
       alert('Error deleting appointment');

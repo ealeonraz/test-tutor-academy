@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Feedback/Feedback.css"; // Reuse existing modal styling
 import { useAuth } from "../context/AuthContext.jsx";
+import { updateTutorSubjects } from "../api/tutors.js";
 
 
 export default function ManageSubjects({ onClose }) {
@@ -8,57 +9,17 @@ export default function ManageSubjects({ onClose }) {
   const [subjects, setSubjects] = useState(user?.subjects || []);
 
   const [isTutor, setIsTutor] = useState(false);
-
-  useEffect(() => {
-    const fetchRole = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const user = JSON.parse(localStorage.getItem('user'));
-        const response = await fetch(`http://localhost:4000/api/info/${user.id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        const data = await response.json();
-        console.log("Fetched role from info route:", data.roleName);
-        if (data.roleName === "tutor") {
-          setIsTutor(true);
-        } else {
-          alert("Access denied: only tutors can update subjects.");
-        }
-      } catch (err) {
-        console.error("Error fetching role info:", err);
-      }
-    };
-    fetchRole();
-  }, []);
-
   const [newSubject, setNewSubject] = useState("");
   const [role, setRole] = useState(null);
 
+  // Keep local state in sync once the profile loads.
   useEffect(() => {
-    const fetchUserRole = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const userId = user?.id;
-  
-        if (!token || !userId) return;
-  
-        const res = await fetch(`http://localhost:4000/api/info/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-  
-        const data = await res.json();
-        console.log("Fetched role from info route:", data.roleName); // Debug
-        setRole(data.roleName);
-      } catch (err) {
-        console.error("Error fetching role:", err);
-      }
-    };
-  
-    fetchUserRole();
+    if (!user) return;
+    setSubjects(user.subjects || []);
+    setRole(user.role);
+    if (user.role === "tutor") {
+      setIsTutor(true);
+    }
   }, [user]);
 
   const handleAddSubject = () => {
@@ -74,38 +35,18 @@ export default function ManageSubjects({ onClose }) {
   };
 
   const handleSave = async () => {
-    const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user"));
     const tutorId = user?.id;
-  
+
     if (!tutorId) {
       alert("User ID not found. Are you logged in?");
       return;
     }
-  
-    if (!token) {
-      alert("No token found. Please log in again.");
-      return;
-    }
-  
+
     try {
-      const response = await fetch(`http://localhost:4000/api/tutors/${tutorId}/subjects`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ subjects }), // 'subjects' is your selected subject list
-      });
-  
-      if (response.ok) {
-        alert("Subjects updated successfully!");
-        onClose(); // Close the modal
-      } else {
-        const errData = await response.json();
-        console.error("Failed to update subjects:", errData);
-        alert("Failed to update subjects.");
-      }
+      const updated = await updateTutorSubjects(tutorId, subjects);
+      if (setUser) setUser(updated);
+      alert("Subjects updated successfully!");
+      onClose(); // Close the modal
     } catch (err) {
       console.error("Error updating subjects:", err);
       alert("An error occurred while updating subjects.");

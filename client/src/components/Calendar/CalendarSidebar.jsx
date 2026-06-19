@@ -8,6 +8,9 @@ import './CalendarSidebar.css';
 import './Calendar.css';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
+import { getMyAppointments, deleteAppointment } from '../../api/appointments';
+import { listNotes } from '../../api/notes';
+import { listTutors } from '../../api/tutors';
 
 export default function CalendarSidebar({
   events = [],
@@ -41,43 +44,16 @@ export default function CalendarSidebar({
   
   // Fetch appointments (already in place)
   useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:4000/api/appointments", {
-          method: "GET",
-          headers: { "Authorization": `Bearer ${token}` },
-        });
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          setAppointments(data);
-        } else {
-          console.error("Error: Data is not an array", data);
-        }
-      } catch (err) {
-        console.error("Error fetching appointments", err);
-      }
-    };
-
-    fetchAppointments();
+    getMyAppointments()
+      .then((data) => setAppointments(data))
+      .catch((err) => console.error("Error fetching appointments", err));
   }, []); // Run once on component mount
 
   // Fetch notes using useEffect
   useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:4000/api/tutor-notes", {
-          method: "GET",
-          headers: { "Authorization": `Bearer ${token}` },
-        });
-        const data = await response.json();
-        setNotes(data); // Set the notes data
-      } catch (error) {
-        console.error("Error fetching notes", error);
-      }
-    };
-    fetchNotes();
+    listNotes()
+      .then((data) => setNotes(data))
+      .catch((error) => console.error("Error fetching notes", error));
   }, []); // Run once on component mount
 
   const now = new Date();
@@ -134,23 +110,11 @@ export default function CalendarSidebar({
     }
 
     try {
-      const response = await fetch(`http://localhost:4000/api/appointments/${event._id}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        alert('Appointment deleted successfully');
-        setAppointments(prevAppointments => prevAppointments.filter(ev => ev._id !== event._id)); // Update state
-        setShowDeleteConfirmation(false); // Close confirmation modal
-        setEventToDelete(null); // Clear the event to delete
-      } else {
-        alert('Failed to delete appointment');
-        setShowDeleteConfirmation(false); // Close confirmation modal on failure
-      }
+      await deleteAppointment(event._id);
+      alert('Appointment deleted successfully');
+      setAppointments(prevAppointments => prevAppointments.filter(ev => ev._id !== event._id)); // Update state
+      setShowDeleteConfirmation(false); // Close confirmation modal
+      setEventToDelete(null); // Clear the event to delete
     } catch (err) {
       console.error('Error deleting appointment:', err);
       alert('Error deleting appointment');
@@ -167,14 +131,7 @@ export default function CalendarSidebar({
     // Fetch tutor's available times from the backend when editing
     const fetchTutorTimes = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/tutors", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-  
-        const data = await response.json();
-        console.log("Fetched Tutor Times:", data); // Check the fetched tutor availability
+        const data = await listTutors();
         setTutorTimes(data); // Set tutor's available times
       } catch (err) {
         console.error("Error fetching tutor availability:", err);

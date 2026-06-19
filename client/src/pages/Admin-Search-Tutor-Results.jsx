@@ -5,6 +5,7 @@ import Navbar from '../components/Navbars/LoggedInNavbar';
 
 import './Page.css';
 import profilePic from '../assets/piccolo-pic.webp';
+import { listTutors } from '../api/tutors';
 
 export default function SDH_yourTutors() {
     const [tutors, setTutors] = useState([])
@@ -12,8 +13,8 @@ export default function SDH_yourTutors() {
     useEffect(() => {
         async function fetchTutors() {
             try {
-                const response = await fetch('/api/tutors');
-                const data = await response.json();
+                const data = await listTutors();
+                setTutors(data);
             } catch (error) {
                 console.error('Error fetching the tutors:', error);
             }

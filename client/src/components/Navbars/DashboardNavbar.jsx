@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getMyProfile } from '../../api/auth';
 
 export default function DashboardNavbar() {
   const navigate = useNavigate();
@@ -11,37 +12,24 @@ export default function DashboardNavbar() {
     roleName:"",
   });
 
-  const token = localStorage.getItem('token'); // Get token from localStorage
-
-  // Fetch user info based on the token
+  // Fetch user info for the current session
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/info/:id', {
-          method: "GET",
-          headers: { "Authorization": `Bearer ${token}` }, // Sending the token as-is
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch user info');
-        }
-
-        const data = await response.json();
-
+        const data = await getMyProfile();
+        if (!data) return;
         setUserInfo({
-          email: data.email,  // Assuming the API returns the user's email and role
-          role: data.roles[0] || 'guest',
-          roleName: data.roleName, 
+          email: data.email,
+          role: data.role || 'guest',
+          roleName: data.role,
         });
       } catch (error) {
         console.error("Error fetching user info:", error);
       }
     };
 
-    if (token) {
-      fetchUserInfo();
-    }
-  }, [token]);
+    fetchUserInfo();
+  }, []);
 
   // Get the user role (default to 'guest' if not available)
   const userRole = userInfo.role
@@ -62,7 +50,7 @@ export default function DashboardNavbar() {
   // Define different navbar items based on role
   const renderNavbar = () => {
     switch (userRole) {
-      case '67fc5b4862b00200769805b6':
+      case 'student':
         return (
           <>
             <div className="dashboard-button" onClick={sendToYourTutors}>Your Tutors</div>
@@ -72,7 +60,7 @@ export default function DashboardNavbar() {
             <div className="dashboard-button" onClick={sendToEvents}>Events</div>
           </>
         );
-      case '67fc5b4862b00200769805b5':
+      case 'tutor':
         return (
           <>
             <div className="dashboard-button" onClick={sendToYourStudents}>My Students</div>
@@ -82,7 +70,7 @@ export default function DashboardNavbar() {
             <div className="dashboard-button" onClick={sendToPayroll}>Payroll</div>
           </>
         );
-      case '67fc5b4862b00200769805b4':
+      case 'admin':
         return (
           <>
             <div className="dashboard-button" onClick={sendToPayroll}>Payroll</div>

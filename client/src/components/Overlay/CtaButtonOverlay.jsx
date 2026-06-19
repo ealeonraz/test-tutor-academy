@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import React, { useRef } from "react";
+import { signUp } from "../../api/auth";
 
 
 
@@ -75,24 +76,17 @@ const CtaButtonOverlay = () => {
         }
         
         try {
-            const response = await fetch("http://localhost:4000/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json", 
-                },
-                body: JSON.stringify(registerData),
+            await signUp({
+                first: registerData.first,
+                last: registerData.last,
+                email: registerData.email,
+                password: registerData.password,
+                role: registerData.role,
             });
-
-            if (!response.ok) {
-                throw new error("Could not fetch database");
-            }
-
-            const result = await response.json();
-            console.log(result.id);
             closeDialog();
-
         } catch(error) {
-            console.error("Failed to create account");
+            console.error("Failed to create account", error);
+            setErrorMessage(error.message || "Account creation failed. Please try again.");
         }
     };
 

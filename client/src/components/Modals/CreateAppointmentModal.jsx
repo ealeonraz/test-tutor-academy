@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './CreateAppointment.css';
+import { listTutors } from '../../api/tutors';
+import { createAppointment } from '../../api/appointments';
 
 export default function CreateAppointmentModal({ onClose, onSave }) {
   const [tutors, setTutors] = useState([]);
@@ -15,19 +17,11 @@ export default function CreateAppointmentModal({ onClose, onSave }) {
   const [additionalNotes, setAdditionalNotes] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
-  const token = localStorage.getItem("token");
-
   // Fetch tutors and subjects
   useEffect(() => {
     const fetchTutorsAndSubjects = async () => {
       try {
-        const res = await fetch("http://localhost:4000/api/tutors", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await res.json();
+        const data = await listTutors();
         setTutors(data);
         // Get unique subjects across all tutors
         const uniqueSubjects = [...new Set(data.flatMap(t => t.subjects || []))];
@@ -37,7 +31,7 @@ export default function CreateAppointmentModal({ onClose, onSave }) {
       }
     };
     fetchTutorsAndSubjects();
-  }, [token]);
+  }, []);
 
   // Handle subject change
   useEffect(() => {
@@ -115,27 +109,19 @@ export default function CreateAppointmentModal({ onClose, onSave }) {
       },
     };
   
-    // Submit the appointment data
-    onSave(appointmentData);
-    setSubmitted(true);
-  
     try {
-      const response = await fetch("http://localhost:4000/api/appointments/create", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(appointmentData),
+      const created = await createAppointment({
+        tutorId: tutor,
+        start: formattedStart,
+        end: formattedEnd,
+        subject,
       });
-  
-      if (!response.ok) {
-        throw new Error("Unable to create appointment");
-      }
-  
-      const res = await response.json();
+      // Hand the saved appointment (with real id) back to the calendar.
+      onSave({ ...appointmentData, ...created });
+      setSubmitted(true);
     } catch (err) {
       console.error(err);
+      alert("Unable to create appointment");
     }
   };
   

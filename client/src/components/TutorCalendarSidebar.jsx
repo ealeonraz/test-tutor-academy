@@ -3,8 +3,10 @@ import { FaCalendarAlt, FaChalkboardTeacher, FaStickyNote, FaEdit, FaTrashAlt } 
 import EditScheduleForm from './EditSchedule.jsx';  // Import the new EditScheduleForm
 import Feedback from './Feedback/Feedback.jsx'; 
 import './TutorCalendarSidebar.css'; 
-import { useAuth } from '../context/AuthContext.jsx'; 
+import { useAuth } from '../context/AuthContext.jsx';
 import ManageSubjects from './ManageSubjects.jsx';
+import { getTutorAppointments } from '../api/tutors';
+import { deleteAppointment } from '../api/appointments';
 
 
 export default function TutorSidebar({ 
@@ -27,30 +29,15 @@ export default function TutorSidebar({
 
   const token = localStorage.getItem("token");  
 
-  // Fetch tutor's appointments   
-  useEffect(() => { 
-    const fetchAppointments = async () => { 
-      try { 
-        const token = localStorage.getItem("token"); 
-        const response = await fetch("http://localhost:4000/api/tutors/appointments", { 
-          method: "GET", 
-          headers: { "Authorization": `Bearer ${token}` }, 
-        }); 
-        const data = await response.json();        
-        if (Array.isArray(data)) { 
-          setAppointments(data); 
-        } else { 
-          console.error("Error: Data is not an array", data); 
-          setAppointments([]); // Set it to an empty array in case of error 
-        } 
-      } catch (err) { 
-        console.error("Error fetching appointments", err); 
-        setAppointments([]); // Set to empty array on error 
-      } 
-    };    
-
-    fetchAppointments(); 
-  }, []);      
+  // Fetch tutor's appointments
+  useEffect(() => {
+    getTutorAppointments()
+      .then((data) => setAppointments(Array.isArray(data) ? data : []))
+      .catch((err) => {
+        console.error("Error fetching appointments", err);
+        setAppointments([]); // Set to empty array on error
+      });
+  }, []);
 
   const now = new Date(); 
 
@@ -102,20 +89,10 @@ export default function TutorSidebar({
   // Handle the delete appointment logic
   const handleDeleteAppointment = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/api/appointments/${selectedAppointment._id}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        alert('Appointment deleted successfully');
-        onCancelAppointment(selectedAppointment); // Remove the appointment from the UI
-      } else {
-        alert('Failed to delete appointment');
-      }
+      await deleteAppointment(selectedAppointment._id);
+      alert('Appointment deleted successfully');
+      setAppointments(prev => prev.filter(ev => ev._id !== selectedAppointment._id));
+      onCancelAppointment(selectedAppointment); // Remove the appointment from the UI
     } catch (err) {
       console.error('Error deleting appointment:', err);
       alert('Error deleting appointment');
